@@ -10,15 +10,15 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-[".oh-my-zsh/custom/themes/powerlevel10k"]
+[".oh-my-zsh/custom/plugins/zsh-autocomplete"]
     type = "archive"
-    url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
+    url = "https://github.com/marlonrichert/zsh-autocomplete/archive/master.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-[".oh-my-zsh/custom/themes/zsh-autocomplete"]
+[".oh-my-zsh/custom/themes/powerlevel10k"]
     type = "archive"
-    url = "https://github.com/marlonrichert/zsh-autocomplete/archive/master.tar.gz"
+    url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
