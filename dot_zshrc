@@ -10,13 +10,27 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
-PATH=$PATH:$HOME/.local/bin
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
-source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
-source ~/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+if [ -f "$HOME/.zsh/powerlevel10k/powerlevel10k.zsh-theme" ] ; then
+    source $HOME/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+fi
 
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f "$HOME/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ] ; then
+    source ~/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+fi
+
+if [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] ; then
+    source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 alias ls="exa --icons --group-directories-first"
 alias bat="bat --style=auto"
