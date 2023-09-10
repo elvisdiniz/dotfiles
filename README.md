@@ -1,16 +1,60 @@
+
 # dotfiles
 
-## install
+## commands to install dotfiles using [chezmoi](https://www.chezmoi.io)
+
+### install
+
     sh -c "$(curl -fsLS get.chezmoi.io/lb)"
 
-## initialize
+### initialize
+
     chezmoi init https://github.com/elvisdiniz/dotfiles.git
 
-## initialize and apply
+### initialize and apply
+
     chezmoi init --apply https://github.com/elvisdiniz/dotfiles.git
 
-## install and apply
+### install and apply
+
+chezmoi's install script can run `chezmoi init` for you by passing extra arguments to the newly installed chezmoi binary. If your dotfiles repo is `github.com/$GITHUB_USERNAME/dotfiles` then installing chezmoi, running `chezmoi init`, and running `chezmoi apply` can be done in a single line of shell:
+
     sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply elvisdiniz
 
-## install, apply and then remove all traces of chezmoi
+### install, apply and then remove all traces of chezmoi
+
+For setting up transitory environments (e.g. short-lived Linux containers) you can install chezmoi, install your dotfiles, and then remove all traces of chezmoi, including the source directory and chezmoi's configuration directory, with a single command:
+
     sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --one-shot elvisdiniz
+
+# extra
+
+## manualy install additional softwares
+
+### debian based distros:
+
+install sudo, exa, bat, curl, git, vim and zsh programs:
+using sudo:
+
+    sudo apt update && sudo apt install -y sudo exa bat curl git vim zsh
+
+as root:
+
+    apt update && apt install -y sudo exa bat curl git vim zsh
+
+### arch based distros:
+
+install exa, bat, curl, git, vim and zsh programs:
+using sudo:
+
+    sudo pacman -Suy exa bat curl git vim zsh
+
+as root:
+
+    pacman -Suy exa bat curl git vim zsh
+
+## other configurations
+
+### set zsh as default shell:
+
+    [[ ! -x /usr/bin/zsh ]] || chsh -s /usr/bin/zsh $USER
