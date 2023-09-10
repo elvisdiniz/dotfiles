@@ -115,6 +115,7 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
 [[ ! -f ~/.zsh/keybindings.zsh ]] || source ~/.zsh/keybindings.zsh
 [[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
+[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

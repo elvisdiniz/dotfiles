@@ -3,3 +3,4 @@
 [[ ! -x "$(command -v batcat)" ]] || alias cat="batcat --style=auto"
 [[ ! -x "$(command -v mktemp)" ]] || alias cdtemp="cd $(mktemp -d)"
 [[ ! -x "$(command -v notepad++.exe)" ]] || alias npp="notepad++.exe"
+[[ ! -x "$(command -v ssh.exe)" ]] || alias ssh="ssh.exe"
