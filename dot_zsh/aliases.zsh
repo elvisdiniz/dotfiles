@@ -2,6 +2,7 @@
 [[ ! -x "$(command -v bat)" ]] || alias cat="bat --style=auto"
 [[ ! -x "$(command -v batcat)" ]] || alias cat="batcat --style=auto"
 [[ ! -x "$(command -v mktemp)" ]] || alias cdtemp="cd $(mktemp -d)"
+[[ -x "$(command -v vim)" || ! -x "$(command -v vi)" ]] || alias vim="vi"
 
 ## wsl specific configs
 # create a alias to notepad++:
