@@ -82,6 +82,9 @@ plugins=(
     zsh-autocomplete
     zsh-syntax-highlighting
     zsh-autosuggestions
+    vscode
+    archlinux
+    debian
 )
 
 source $ZSH/oh-my-zsh.sh
