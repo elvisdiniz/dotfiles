@@ -42,7 +42,7 @@ as root:
 
     apt update && apt install -y sudo exa bat curl git vim zsh
 
-### arch based distros:
+### archlinux:
 
 install exa, bat, curl, git, vim and zsh programs:
 using sudo:
@@ -52,6 +52,10 @@ using sudo:
 as root:
 
     pacman -Suy exa bat curl git vim zsh
+
+run arch on docker with dotfiles
+
+    docker run -e TERM -e COLORTERM -e LC_ALL=C.UTF-8 -it --rm archlinux sh -uec 'pacman --noconfirm -Suy exa bat curl git vim zsh && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --one-shot elvisdiniz && exec zsh'
 
 ### alpine
 
