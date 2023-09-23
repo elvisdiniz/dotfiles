@@ -42,6 +42,10 @@ as root:
 
     apt update && apt install -y sudo exa bat curl git vim zsh
 
+run ubuntu on docker with dotfiles
+
+    docker run -e TERM -e COLORTERM -e LC_ALL=C.UTF-8 -it --rm ubuntu sh -uec 'apt update && apt install -y sudo exa bat curl git vim zsh && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --one-shot elvisdiniz && exec zsh'
+
 ### archlinux:
 
 install exa, bat, curl, git, vim and zsh programs:
