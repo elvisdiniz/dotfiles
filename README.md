@@ -53,6 +53,12 @@ as root:
 
     pacman -Suy exa bat curl git vim zsh
 
+### alpine
+
+run alpine on docker with dotfiles
+
+    docker run -e TERM -e COLORTERM -e LC_ALL=C.UTF-8 -it --rm alpine sh -uec 'apk add sudo exa bat curl git vim zsh && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --one-shot elvisdiniz && exec zsh'
+
 ## other configurations
 
 ### set zsh as default shell:
