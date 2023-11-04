@@ -9,7 +9,7 @@ export OSH='/home/elvisdiniz/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="font"
+OSH_THEME="demula"
 
 # Uncomment the following line to use case-sensitive completion.
 # OMB_CASE_SENSITIVE="true"
@@ -139,3 +139,7 @@ source "$OSH"/oh-my-bash.sh
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
+[[ ! -f ~/.zsh/aliases.zsh ]] || source ~/.zsh/aliases.zsh
+[[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
+[[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
+[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
