@@ -1,4 +1,5 @@
 [[ ! -x "$(command -v exa)" ]] || alias ls="exa --icons --group-directories-first"
+[[ ! -x "$(command -v dust)" ]] || alias du="dust"
 [[ ! -x "$(command -v bat)" ]] || alias cat="bat --style=auto"
 [[ ! -x "$(command -v batcat)" ]] || alias cat="batcat --style=auto"
 [[ ! -x "$(command -v mktemp)" ]] || alias cdtemp="cd $(mktemp -d)"
