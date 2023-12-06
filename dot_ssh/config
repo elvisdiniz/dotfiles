@@ -1,2 +1,15 @@
+Host dns.home.elvisdiniz.com
+	HostName dns.home.elvisdiniz.com
+	User root
+
+Host stubby.home.elvisdiniz.com
+	HostName stubby.home.elvisdiniz.com
+	User root
+
+Host pfsense.home.elvisdiniz.com
+	HostName pfsense.home.elvisdiniz.com
+	User admin
+
 Host *
 	ServerAliveInterval 50
+
