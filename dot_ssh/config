@@ -10,6 +10,30 @@ Host pfsense.home.elvisdiniz.com
 	HostName pfsense.home.elvisdiniz.com
 	User admin
 
+Host pihole.home.elvisdiniz.com
+	HostName pihole.home.elvisdiniz.com
+	User root
+
+Host nas.home.elvisdiniz.com
+	HostName nas.home.elvisdiniz.com
+	User root
+
+Host pve.home.elvisdiniz.com
+	HostName pve.home.elvisdiniz.com
+	User root
+
+Host containers.home.elvisdiniz.com
+	HostName containers.home.elvisdiniz.com
+	User root
+
+Host dhcp.home.elvisdiniz.com
+	HostName dhcp.home.elvisdiniz.com
+	User root
+
+Host proxy.home.elvisdiniz.com
+	HostName proxy.home.elvisdiniz.com
+	User root
+
 Host *
 	ServerAliveInterval 50
 
