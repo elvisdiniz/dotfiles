@@ -34,6 +34,18 @@ Host proxy.home.elvisdiniz.com
 	HostName proxy.home.elvisdiniz.com
 	User root
 
+Host cloudsync.home.elvisdiniz.com
+	HostName cloudsync.home.elvisdiniz.com
+	User elvisdiniz
+
+Host syncthing.home.elvisdiniz.com
+	HostName syncthing.home.elvisdiniz.com
+	User elvisdiniz
+
+Host libreelec.lan.home.elvisdiniz.com
+	HostName libreelec.lan.home.elvisdiniz.com
+	User root
+
 Host *
 	ServerAliveInterval 50
 
