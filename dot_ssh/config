@@ -46,6 +46,10 @@ Host libreelec.lan.home.elvisdiniz.com
 	HostName libreelec.lan.home.elvisdiniz.com
 	User root
 
+Host wireguard.home.elvisdiniz.com
+	HostName wireguard.home.elvisdiniz.com
+	User root
+
 Host *
 	ServerAliveInterval 50
 
