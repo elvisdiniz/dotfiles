@@ -1,18 +1,6 @@
-Host dns.home.elvisdiniz.com
-	HostName dns.home.elvisdiniz.com
-	User root
-
-Host stubby.home.elvisdiniz.com
-	HostName stubby.home.elvisdiniz.com
-	User root
-
 Host pfsense.home.elvisdiniz.com
 	HostName pfsense.home.elvisdiniz.com
 	User admin
-
-Host pihole.home.elvisdiniz.com
-	HostName pihole.home.elvisdiniz.com
-	User root
 
 Host nas.home.elvisdiniz.com
 	HostName nas.home.elvisdiniz.com
@@ -22,34 +10,12 @@ Host pve.home.elvisdiniz.com
 	HostName pve.home.elvisdiniz.com
 	User root
 
-Host containers.home.elvisdiniz.com
-	HostName containers.home.elvisdiniz.com
-	User root
-
-Host dhcp.home.elvisdiniz.com
-	HostName dhcp.home.elvisdiniz.com
-	User root
-
-Host proxy.home.elvisdiniz.com
-	HostName proxy.home.elvisdiniz.com
-	User root
-
-Host cloudsync.home.elvisdiniz.com
-	HostName cloudsync.home.elvisdiniz.com
-	User elvisdiniz
-
-Host syncthing.home.elvisdiniz.com
-	HostName syncthing.home.elvisdiniz.com
-	User elvisdiniz
-
 Host libreelec.lan.home.elvisdiniz.com
 	HostName libreelec.lan.home.elvisdiniz.com
 	User root
 
-Host wireguard.home.elvisdiniz.com
-	HostName wireguard.home.elvisdiniz.com
-	User root
-
 Host *
 	ServerAliveInterval 50
+	User elvisdiniz
+#	PKCS11Provider /usr/lib/pkcs11/libtpm2_pkcs11.so
 
