@@ -17,5 +17,5 @@ Host libreelec.lan.home.elvisdiniz.com
 Host *
 	ServerAliveInterval 50
 	User elvisdiniz
-#	PKCS11Provider /usr/lib/pkcs11/libtpm2_pkcs11.so
+	#PKCS11Provider /usr/lib/pkcs11/libtpm2_pkcs11.so
 
