@@ -39,6 +39,5 @@
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.rulers": [80, 120],
   "editor.renderLineHighlight": "gutter",
-  "workbench.startupEditor": "newUntitledFile",
-  "window.menuBarVisibility": "toggle"
+  "workbench.startupEditor": "newUntitledFile"
 }
