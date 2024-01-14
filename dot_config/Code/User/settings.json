@@ -22,7 +22,7 @@
     "twig"
   ],
   "codesnap.shutterAction": "copy",
-  "editor.fontFamily": "'FiraCode Nerd Font'",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font'",
   "prettier.semi": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -37,7 +37,10 @@
   "redhat.telemetry.enabled": false,
   "files.autoSave": "afterDelay",
   "editor.unicodeHighlight.nonBasicASCII": false,
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.renderLineHighlight": "gutter",
   "workbench.startupEditor": "newUntitledFile"
 }
