@@ -17,13 +17,13 @@
   - MouseClick: [middle, 1]
 - Rule:
   - And:
-    - Test: [thumb_wheel_up, 8]
+    - Test: [thumb_wheel_up, 15]
   - KeyPress:
     - [Control_L, Tab]
     - click
 - Rule:
   - And:
-    - Test: [thumb_wheel_down, 8]
+    - Test: [thumb_wheel_down, 15]
   - KeyPress:
     - [Control_L, Shift_L, Tab]
     - click
