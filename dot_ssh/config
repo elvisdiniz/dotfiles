@@ -6,10 +6,6 @@ Host nas.home.elvisdiniz.com
 	HostName nas.home.elvisdiniz.com
 	User root
 
-Host pve.home.elvisdiniz.com
-	HostName pve.home.elvisdiniz.com
-	User root
-
 Host libreelec.lan.home.elvisdiniz.com
 	HostName libreelec.lan.home.elvisdiniz.com
 	User root
