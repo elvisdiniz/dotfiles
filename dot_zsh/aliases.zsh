@@ -6,6 +6,8 @@
 [[ -x "$(command -v vim)" || ! -x "$(command -v vi)" ]] || alias vim="vi"
 [[ -x "$(command -v open)" || ! -x "$(command -v xdg-open)" ]] || alias open="xdg-open"
 
+alias ccat="/bin/cat"
+
 ## wsl specific configs
 # create a alias to notepad++:
 [[ ! -x "$(command -v notepad++.exe)" ]] || alias npp="notepad++.exe"
