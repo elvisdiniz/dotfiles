@@ -23,7 +23,6 @@
   ],
   "codesnap.shutterAction": "copy",
   "editor.fontFamily": "'JetBrainsMono Nerd Font'",
-  "prettier.semi": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "explicit"
@@ -42,5 +41,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "symbols.hidesExplorerArrows": false,
   "telemetry.telemetryLevel": "off",
-  "github.copilot.editor.enableAutoCompletions": true
+  "github.copilot.editor.enableAutoCompletions": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
