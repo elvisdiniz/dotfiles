@@ -9,7 +9,8 @@
 			"extensions": [
 				"tamasfe.even-better-toml",
 				"DavidAnson.vscode-markdownlint",
-				"fallenwood.vimL"
+				"fallenwood.vimL",
+				"eamodio.gitlens"
 			]
 		}
 	}
