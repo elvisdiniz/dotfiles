@@ -36,11 +36,15 @@
   "redhat.telemetry.enabled": false,
   "files.autoSave": "afterDelay",
   "editor.unicodeHighlight.nonBasicASCII": false,
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.renderLineHighlight": "gutter",
   "workbench.startupEditor": "newUntitledFile",
   "symbols.hidesExplorerArrows": false,
   "telemetry.telemetryLevel": "off",
   "github.copilot.editor.enableAutoCompletions": true,
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "window.restoreWindows": "none"
 }
