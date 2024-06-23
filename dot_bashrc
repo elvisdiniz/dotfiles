@@ -143,3 +143,8 @@ source "$OSH"/oh-my-bash.sh
 [[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
 [[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
 [[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
+
+# Bootstrap asdf-vm
+[[ ! -f ~/.asdf/asdf.sh ]] || source ~/.asdf/asdf.sh
+[[ ! -f ~/.asdf/completions/asdf.bash ]] || source ~/.asdf/completions/asdf.bash
+

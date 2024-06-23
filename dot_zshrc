@@ -79,6 +79,7 @@ plugins=(
     vscode
     archlinux
     debian
+	asdf
 )
 
 source $ZSH/oh-my-zsh.sh
