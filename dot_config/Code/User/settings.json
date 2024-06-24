@@ -24,8 +24,8 @@
   "codesnap.shutterAction": "copy",
   "editor.fontFamily": "'JetBrainsMono Nerd Font'",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
   },
   "editor.fontLigatures": true,
   "workbench.iconTheme": "symbols",
@@ -44,5 +44,18 @@
   "github.copilot.editor.enableAutoCompletions": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "window.restoreWindows": "none",
-  "terminal.integrated.defaultProfile.linux": "zsh"
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "editor.formatOnPaste": true,
+  "files.autoSaveWhenNoErrors": true,
+  "dev.containers.defaultExtensionsIfInstalledLocally": [
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "GitHub.vscode-pull-request-github",
+    "adpyke.codesnap",
+    "donjayamanne.githistory",
+    "eamodio.gitlens"
+  ],
+  "dev.containers.defaultFeatures": {
+    "ghcr.io/guiyomh/features/vim": {}
+  }
 }
