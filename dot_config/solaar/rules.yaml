@@ -1,6 +1,9 @@
 %YAML 1.3
 ---
 - Rule:
+  - Test: [charging, 'True']
+  - Execute: [notify-send, Mouse Charging]
+- Rule:
   - MouseGesture: Mouse Up
   - Execute: [qdbus, org.kde.plasmashell, /PlasmaShell, activateLauncherMenu]
 - Rule:
