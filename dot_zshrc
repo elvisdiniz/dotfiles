@@ -79,6 +79,8 @@ plugins=(
     vscode
     archlinux
     debian
+	docker
+	docker-compose
 	asdf
 )
 
