@@ -19,6 +19,8 @@
     "vue",
     "xml"
   ],
+  "codesnap.containerPadding": "1em",
+  "codesnap.showWindowControls": false,
   "codesnap.shutterAction": "copy",
   "dev.containers.defaultExtensionsIfInstalledLocally": [
     "adpyke.codesnap",
@@ -40,7 +42,10 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "gutter",
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.unicodeHighlight.nonBasicASCII": false,
   "explorer.confirmDragAndDrop": false,
   "files.autoSave": "afterDelay",
