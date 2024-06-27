@@ -3,7 +3,11 @@ function prompt_char {
     echo '○'
 }
 
-PROMPT='%{$fg[magenta]%}%n%{$reset_color%} ' # user
+PROMPT='' # initialize prompt variable
+
+if [ "$DEFAULT_USER" != "$USER" ]; then
+    PROMPT+='%{$fg[magenta]%}%n%{$reset_color%} ' # add user if is not the default user
+fi
 
 if [ -n "$SSH_CLIENT" ]; then
     PROMPT+='at %{$fg[yellow]%}%m%{$reset_color%} ' # print host if is remote machine
