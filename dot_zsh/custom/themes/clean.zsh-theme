@@ -1,5 +1,14 @@
 # clean theme: inspired on dstufft theme
 
+function is_ssh() {
+  p=${1:-$PPID}
+  read pid name x ppid y < <( cat /proc/$p/stat )
+  # or: read pid name ppid < <(ps -o pid= -o comm= -o ppid= -p $p) 
+  [[ "$name" =~ sshd ]] && { echo "Is SSH : $pid $name"; return 0; }
+  [ "$ppid" -le 1 ]     && { echo "Adam is $pid $name";  return 1; }
+  is_ssh $ppid
+}
+
 function prompt_char {
     git branch >/dev/null 2>/dev/null && echo '±' && return
     echo '○'
@@ -11,7 +20,7 @@ if [ "$DEFAULT_USER" != "$USER" ]; then
     PROMPT+='%{$fg[magenta]%}%n%{$reset_color%} ' # add user if is not the default user
 fi
 
-if [ -n "$SSH_CLIENT" ]; then
+if [ is_ssh ]; then
     PROMPT+='at %{$fg[yellow]%}%m%{$reset_color%} ' # print host if is remote machine
 elif [ -f /.dockerenv ]; then
     PROMPT+='at %{$fg[blue]%}%m%{$reset_color%} ' # print host if is remote machine
