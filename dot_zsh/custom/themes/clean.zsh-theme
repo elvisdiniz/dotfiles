@@ -16,7 +16,7 @@ function prompt_char {
 
 PROMPT='' # initialize prompt variable
 
-if [ "$DEFAULT_USER" != "$USER" ]; then
+if [ "$UID" != '1000' ]; then
     PROMPT+='%{$fg[magenta]%}%n%{$reset_color%} ' # add user if is not the default user
 fi
 
