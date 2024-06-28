@@ -26,7 +26,8 @@ elif [ -f /.dockerenv ]; then
     PROMPT+='at %{$fg[blue]%}%m%{$reset_color%} ' # print host if is remote machine
 fi
 
-PROMPT+='in %{$fg[green]%}%~%{$reset_color%}$(git_prompt_info)'
+PROMPT+='in %{$fg[green]%}%~%{$reset_color%}' # print cwd
+PROMPT+='$(git_prompt_info)' # git info
 PROMPT+='
 %(?:%{$fg[green]%}%1{$(prompt_char)%} :%{$fg[red]%}%1{$(prompt_char)%}) ' # prompt char
 
