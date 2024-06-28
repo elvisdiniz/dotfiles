@@ -3,6 +3,3 @@
 
 [[ ! -f ~/.acme.sh/acme.sh.env ]] || source ~/.acme.sh/acme.sh.env
 
-# Default username
-export DEFAULT_USER=elvisdiniz
-
