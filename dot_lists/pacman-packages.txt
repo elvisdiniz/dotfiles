@@ -20,7 +20,10 @@ eza
 fastfetch
 filelight
 firefox
+firefox-dark-reader
 firefox-developer-edition
+firefox-developer-edition-i18n-pt-br
+firefox-ublock-origin
 flatpak
 fuseiso
 gimp
@@ -49,7 +52,6 @@ kget
 kimageformats
 kleopatra
 knot
-knotes
 kolourpaint
 kompare
 konsole
@@ -88,7 +90,6 @@ lshw
 man-db
 mediainfo
 mediainfo-gui
-merkuro
 mysql-workbench
 neovim
 net-tools
