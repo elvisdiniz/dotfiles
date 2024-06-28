@@ -1,12 +1,8 @@
 aaron-bond.better-comments
 adpyke.codesnap
-clarkyu.vscode-sql-beautify
 donjayamanne.githistory
-dracula-theme.theme-dracula
 eamodio.gitlens
 firefox-devtools.vscode-firefox-debug
-formulahendry.auto-close-tag
-formulahendry.auto-rename-tag
 github.codespaces
 github.copilot
 github.copilot-chat
@@ -19,6 +15,3 @@ ms-vscode-remote.remote-ssh-edit
 ms-vscode-remote.vscode-remote-extensionpack
 ms-vscode.remote-explorer
 ms-vscode.remote-server
-pkief.material-icon-theme
-redhat.vscode-xml
-redhat.vscode-yaml
