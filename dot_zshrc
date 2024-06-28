@@ -1,6 +1,3 @@
-# Export env vars on begin
-[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -120,4 +117,5 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
 [[ ! -f ~/.zsh/keybindings.zsh ]] || source ~/.zsh/keybindings.zsh
 [[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
+[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
 
