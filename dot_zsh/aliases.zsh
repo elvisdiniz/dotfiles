@@ -6,6 +6,7 @@
 [[ -x "$(command -v vim)" || ! -x "$(command -v vi)" ]] || alias vim="vi"
 [[ -x "$(command -v open)" || ! -x "$(command -v xdg-open)" ]] || alias open="xdg-open"
 [[ ! -x "$(command -v chezmoi)" ]] || alias chupg="chezmoi upgrade"; alias chupd="chezmoi update"
+[[ ! -x "$(command -v btm)" ]] || alias btm="btm --mem_as_value -m"
 
 #alias ccat="/bin/cat"
 
