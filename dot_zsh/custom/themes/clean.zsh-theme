@@ -11,8 +11,8 @@ function is_ssh() {
 
 function prompt_char {
     git branch >/dev/null 2>/dev/null && echo '±' && return
-    #echo '○'
-    echo '->'
+    echo '○'
+    #echo '->'
 }
 
 PROMPT='' # initialize prompt variable
