@@ -3,7 +3,7 @@
 # ---- FZF -----
 
 # Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
 
 # --- setup fzf theme ---
 fg="#CBE0F0"
