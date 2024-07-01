@@ -2,16 +2,16 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Path to custom zsh plugins and themes
-ZSH_CUSTOM="$HOME/.zsh/custom"
+# ZSH_CUSTOM="$HOME/.zsh/custom"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="clean"
+# ZSH_THEME="clean"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -27,7 +27,7 @@ ZSH_THEME="clean"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
@@ -64,7 +64,13 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="yyyy-mm-dd"
-
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=100000
+HISTSIZE=99999
+setopt share_history 
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -73,20 +79,24 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
+#plugins=(
 #    git
-    zsh-syntax-highlighting
-    zsh-autocomplete
-    zsh-autosuggestions
+#    zsh-syntax-highlighting
+#    zsh-autocomplete
+#    zsh-autosuggestions
 #    vscode
 #    archlinux
 #    debian
 #    docker
 #    docker-compose
 #    asdf
-)
+#)
 
-source $ZSH/oh-my-zsh.sh
+source $HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -120,3 +130,4 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
 [[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
 
+eval "$(starship init zsh)"
