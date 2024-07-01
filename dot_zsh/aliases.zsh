@@ -4,6 +4,7 @@
 [[ ! -x "$(command -v batcat)" ]] || alias bat="batcat --style=auto"
 [[ ! -x "$(command -v mktemp)" ]] || alias cdtemp="cd $(mktemp -d)"
 [[ -x "$(command -v vim)" || ! -x "$(command -v vi)" ]] || alias vim="vi"
+[[ -x "$(command -v dig)" || ! -x "$(command -v kdig)" ]] || alias dig="kdig"
 [[ -x "$(command -v open)" || ! -x "$(command -v xdg-open)" ]] || alias open="xdg-open"
 [[ ! -x "$(command -v chezmoi)" ]] || alias chupg="chezmoi upgrade"; alias chupd="chezmoi update"
 [[ ! -x "$(command -v btm)" ]] || alias btm="btm --mem_as_value -m"

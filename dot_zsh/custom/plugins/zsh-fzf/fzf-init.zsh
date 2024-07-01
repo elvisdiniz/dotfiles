@@ -1,4 +1,6 @@
 [[ -x "$(command -v fzf)" ]] || exit 0
+[[ -x "$(command -v eza)" ]] || exit 0
+[[ -x "$(command -v fd)" ]] || exit 0
 # ---- FZF -----
 
 # Set up fzf key bindings and fuzzy completion
@@ -49,7 +51,7 @@ _fzf_comprun() {
   case "$command" in
     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo \${}'"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    ssh)          fzf --preview 'kdig {}'                   "$@" ;;
     *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
   esac
 }
