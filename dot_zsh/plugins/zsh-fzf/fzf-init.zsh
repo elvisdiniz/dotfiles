@@ -1,7 +1,3 @@
-[[ -x "$(command -v fzf)" ]] || exit 0
-[[ -x "$(command -v exa)" ]] || exit 0
-# ---- FZF -----
-
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
