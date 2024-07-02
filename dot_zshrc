@@ -25,3 +25,5 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
 
 eval "$(starship init zsh)"
+
+zstyle ':autocomplete:*' delay 0.4  # seconds (float)
