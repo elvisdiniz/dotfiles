@@ -1,4 +1,5 @@
-[[ ! -x "$(command -v exa)" ]] || alias ls="exa --icons --group-directories-first"
+[[ ! -x "$(command -v eza)" ]] || alias ls="eza --icons --group-directories-first"
+[[ ! -x "$(command -v eza)" ]] || alias eza="eza --icons --group-directories-first"
 [[ ! -x "$(command -v dust)" ]] || alias du="dust"
 [[ ! -x "$(command -v bat)" ]] || alias bat="bat --style=auto"
 [[ ! -x "$(command -v batcat)" ]] || alias bat="batcat --style=auto"
