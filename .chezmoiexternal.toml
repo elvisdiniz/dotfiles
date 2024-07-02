@@ -49,7 +49,7 @@
 [".local/bin/eza"]
     type = "archive-file"
     url = "https://github.com/eza-community/eza/releases/download/v0.18.21/eza_x86_64-unknown-linux-gnu.tar.gz"
-    path = "eza"
+    path = "eza_x86_64-unknown-linux-gnu/eza"
 [".local/bin/zoxide"]
     type = "archive-file"
     url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.4/zoxide-0.9.4-x86_64-unknown-linux-musl.tar.gz"
