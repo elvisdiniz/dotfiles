@@ -17,9 +17,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-[[ ! -f ~/.shell/aliases.zsh ]] || source ~/.shell/aliases.zsh
 [[ ! -f ~/.shell/paths.zsh ]] || source ~/.shell/paths.zsh
 [[ ! -f ~/.shell/envs.zsh ]] || source ~/.shell/envs.zsh
+[[ ! -f ~/.shell/aliases.zsh ]] || source ~/.shell/aliases.zsh
 
 [[ ! -f ~/.zsh/keybindings.zsh ]] || source ~/.zsh/keybindings.zsh
 [[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
