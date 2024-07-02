@@ -12,14 +12,16 @@ plugins=(
     zsh-syntax-highlighting
     zsh-autocomplete
     zsh-autosuggestions
+    asdf
 )
 
 source $ZSH/oh-my-zsh.sh
-[[ ! -f ~/.zsh/aliases.zsh ]] || source ~/.zsh/aliases.zsh
-[[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
+
+[[ ! -f ~/.shell/aliases.zsh ]] || source ~/.shell/aliases.zsh
+[[ ! -f ~/.shell/paths.zsh ]] || source ~/.shell/paths.zsh
+[[ ! -f ~/.shell/envs.zsh ]] || source ~/.shell/envs.zsh
+
 [[ ! -f ~/.zsh/keybindings.zsh ]] || source ~/.zsh/keybindings.zsh
-[[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
-[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
 [[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
 
 eval "$(starship init zsh)"

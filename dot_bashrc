@@ -5,11 +5,11 @@ case $- in
 esac
 
 # Path to your oh-my-bash installation.
-export OSH='/home/elvisdiniz/.oh-my-bash'
+export OSH="$HOME/.oh-my-bash"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="demula"
+# OSH_THEME="demula"
 
 # Uncomment the following line to use case-sensitive completion.
 # OMB_CASE_SENSITIVE="true"
@@ -99,7 +99,6 @@ aliases=(
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
   bashmarks
 )
 
@@ -139,12 +138,16 @@ source "$OSH"/oh-my-bash.sh
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
-[[ ! -f ~/.zsh/aliases.zsh ]] || source ~/.zsh/aliases.zsh
-[[ ! -f ~/.zsh/paths.zsh ]] || source ~/.zsh/paths.zsh
-[[ ! -f ~/.zsh/configs.zsh ]] || source ~/.zsh/configs.zsh
-[[ ! -f ~/.zsh/envs.zsh ]] || source ~/.zsh/envs.zsh
+[[ ! -f ~/.shell/aliases.zsh ]] || source ~/.shell/aliases.zsh
+[[ ! -f ~/.shell/paths.zsh ]] || source ~/.shell/paths.zsh
+[[ ! -f ~/.shell/envs.zsh ]] || source ~/.shell/envs.zsh
 
 # Bootstrap asdf-vm
 [[ ! -f ~/.asdf/asdf.sh ]] || source ~/.asdf/asdf.sh
 [[ ! -f ~/.asdf/completions/asdf.bash ]] || source ~/.asdf/completions/asdf.bash
 
+
+eval "$(starship init bash)"
+
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
