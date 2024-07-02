@@ -1,5 +1,5 @@
 # Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
+source <(~/.local/bin/fzf --zsh)
 
 # --- setup fzf theme ---
 fg="#CBE0F0"
