@@ -48,7 +48,7 @@
     path = "fd-v10.1.0-x86_64-unknown-linux-gnu/fd"
 [".local/bin/eza"]
     type = "archive-file"
-    url = "https://github.com/eza-community/eza/releases/download/v0.18.21/eza_x86_64-unknown-linux-gnu.tar.gz"
+    url = "https://github.com/eza-community/eza/releases/download/v0.18.21/eza_x86_64-unknown-linux-musl.tar.gz"
     path = "eza"
 [".local/bin/zoxide"]
     type = "archive-file"
