@@ -36,7 +36,7 @@
     refreshPeriod = "168h"
 [".local/bin/starship"]
     type = "archive-file"
-    url = "https://github.com/starship/starship/releases/download/v1.19.0/starship-x86_64-unknown-linux-gnu.tar.gz"
+    url = "https://github.com/starship/starship/releases/download/v1.19.0/starship-x86_64-unknown-linux-musl.tar.gz"
     path = "starship"
 [".local/bin/fzf"]
     type = "archive-file"
@@ -44,8 +44,8 @@
     path = "fzf"
 [".local/bin/fd"]
     type = "archive-file"
-    url = "https://github.com/sharkdp/fd/releases/download/v10.1.0/fd-v10.1.0-x86_64-unknown-linux-gnu.tar.gz"
-    path = "fd-v10.1.0-x86_64-unknown-linux-gnu/fd"
+    url = "https://github.com/sharkdp/fd/releases/download/v10.1.0/fd-v10.1.0-x86_64-unknown-linux-musl.tar.gz"
+    path = "fd-v10.1.0-x86_64-unknown-linux-musl/fd"
 [".local/bin/eza"]
     type = "archive-file"
     url = "https://github.com/eza-community/eza/releases/download/v0.18.21/eza_x86_64-unknown-linux-musl.zip"
@@ -56,5 +56,5 @@
     path = "zoxide"
 [".local/bin/bat"]
     type = "archive-file"
-    url = "https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-gnu.tar.gz"
-    path = "bat-v0.24.0-x86_64-unknown-linux-gnu/bat"
+    url = "https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz"
+    path = "bat-v0.24.0-x86_64-unknown-linux-musl/bat"
