@@ -1,7 +1,2 @@
 [sudo]
 disabled = false
-
-[hostname]
-ssh_only = false
-detect_env_vars = ['IS_SSH']
-disabled = false

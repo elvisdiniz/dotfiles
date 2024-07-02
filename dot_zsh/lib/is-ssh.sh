@@ -9,6 +9,6 @@ function is_ssh() {
   is_ssh $ppid
 }
 
-if [[ $(is_ssh) == "yes" ]]; then
-  export IS_SSH=$(is_ssh)
+if [[ -z $SSH_CONNECTION && $(is_ssh) == "yes" ]]; then
+  export SSH_CONNECTION=$(is_ssh)
 fi
