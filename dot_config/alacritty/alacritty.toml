@@ -16,3 +16,6 @@ normal.family = "MesloLGS Nerd Font Mono"
 program = "/usr/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]
 
+[window]
+opacity = 0.9
+#blur = true
