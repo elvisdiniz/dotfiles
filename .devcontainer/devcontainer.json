@@ -10,7 +10,8 @@
 				"tamasfe.even-better-toml",
 				"DavidAnson.vscode-markdownlint",
 				"fallenwood.vimL",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"foxundermoon.shell-format"
 			]
 		}
 	}
