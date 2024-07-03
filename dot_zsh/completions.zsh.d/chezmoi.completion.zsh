@@ -1,0 +1,1 @@
+[[ ! -x "$(command -v chezmoi)" ]] || eval "$(chezmoi completion zsh)"
