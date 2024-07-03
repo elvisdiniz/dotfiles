@@ -9,9 +9,6 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 
-# initialize completions
-autoload -U compinit; compinit
-
 # install, if not installed yet, and source zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -25,7 +22,7 @@ autoload -Uz _zinit
 zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
-zinit load asdf-vm/asdf
+zinit light asdf-vm/asdf
 
 # load/install Oh My Zsh plugins
 zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
@@ -38,6 +35,10 @@ zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
 
 # souce .zsh/*.zsh files
 [[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
+
+# compinit
+autoload -U compinit
+compinit
 
 # create starship prompt
 eval "$(starship init zsh)"
