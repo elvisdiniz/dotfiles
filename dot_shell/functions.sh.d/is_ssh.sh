@@ -1,5 +1,3 @@
-# clean theme: inspired on dstufft theme
-
 function is_ssh() {
   p=${1:-$PPID}
   [ "$p" -eq 0 ]     && { echo no; return 1; }
@@ -9,6 +7,3 @@ function is_ssh() {
   is_ssh $ppid
 }
 
-if [[ -z $SSH_CONNECTION && $(is_ssh) == "yes" ]]; then
-  export SSH_CONNECTION=$(is_ssh)
-fi
