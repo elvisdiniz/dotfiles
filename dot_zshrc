@@ -32,7 +32,7 @@ zinit snippet OMZP::sudo/sudo.plugin.zsh
 zinit snippet OMZP::docker/docker.plugin.zsh
 
 # source .shell/*.zsh files
-[[ ! -f ~/.shell/functions.sh ]] || source ~/.shell/paths.sh
+[[ ! -f ~/.shell/functions.sh ]] || source ~/.shell/functions.sh
 [[ ! -f ~/.shell/paths.sh ]] || source ~/.shell/paths.sh
 [[ ! -f ~/.shell/envs.sh ]] || source ~/.shell/envs.sh
 [[ ! -f ~/.shell/aliases.sh ]] || source ~/.shell/aliases.sh
