@@ -33,6 +33,7 @@
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.menuBarVisibility": "hidden",
   "window.restoreWindows": "none",
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
