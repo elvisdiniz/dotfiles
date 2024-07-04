@@ -9,8 +9,10 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 
-# ###
+# create init completions cache dir
 mkdir -p ~/.cache/zinit/completions
+# create a empty file to avoid zsh glob error
+echo "" > ~/.cache/zinit/completions/_
 
 # install, if not installed yet, and source zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
