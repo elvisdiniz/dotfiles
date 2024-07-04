@@ -10,7 +10,7 @@
 # Whether to hide the average cpu entry.
 #hide_avg_cpu = false
 # Whether to use dot markers rather than braille.
-#dot_marker = false
+dot_marker = true
 # The update rate of the application.
 #rate = "1s"
 # Whether to put the CPU legend to the left.
@@ -74,7 +74,7 @@ mem_as_value = true
 # Hides advanced options to stop a process on Unix-like systems.
 #disable_advanced_kill = false
 # Shows GPU(s) memory
-#enable_gpu_memory = false
+enable_gpu_memory = true
 # Shows cache and buffer memory
 #enable_cache_memory = false
 # How much data is stored at once in terms of time.
