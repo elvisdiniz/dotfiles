@@ -6,9 +6,8 @@
     "adpyke.codesnap",
     "donjayamanne.githistory",
     "eamodio.gitlens",
-    "GitHub.copilot",
-    "GitHub.copilot-chat",
-    "GitHub.vscode-pull-request-github"
+    "GitHub.vscode-pull-request-github",
+    "TabNine.tabnine-vscode"
   ],
   "dev.containers.defaultFeatures": {
     "ghcr.io/guiyomh/features/vim": {}
@@ -22,24 +21,21 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "gutter",
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "editor.unicodeHighlight.nonBasicASCII": false,
   "explorer.confirmDragAndDrop": false,
   "files.autoSave": "afterDelay",
   "files.autoSaveWhenNoErrors": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "github.copilot.editor.enableAutoCompletions": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "symbols.hidesExplorerArrows": false,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.restoreWindows": "none",
-  "workbench.colorTheme": "Min Dark",
-  "workbench.iconTheme": "symbols",
-  "workbench.startupEditor": "newUntitledFile"
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.startupEditor": "newUntitledFile",
+  "tabnine.experimentalAutoImports": true
 }
