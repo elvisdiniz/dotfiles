@@ -33,6 +33,10 @@ zinit light asdf-vm/asdf
 zinit snippet OMZP::sudo/sudo.plugin.zsh
 zinit snippet OMZP::docker/docker.plugin.zsh
 
+if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
+    zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
+fi
+
 # source .shell/*.sh files
 [[ ! -f ~/.shell/functions.sh ]] || source ~/.shell/functions.sh
 [[ ! -f ~/.shell/paths.sh ]] || source ~/.shell/paths.sh
