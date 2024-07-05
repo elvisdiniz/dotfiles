@@ -1,4 +1,4 @@
-for file in $(dirname $0)/completions.zsh.d/**/*.completion.zsh; do
+for file in ~/.zsh/completions.zsh.d/**/*.completion.zsh; do
     source "$file"
 done
 
