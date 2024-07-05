@@ -19,3 +19,4 @@ args = ["-l", "-c", "tmux attach || tmux"]
 [window]
 opacity = 0.9
 #blur = true
+startup_mode = "Maximized"
