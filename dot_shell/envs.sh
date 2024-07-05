@@ -8,3 +8,6 @@ if [[ -z $SSH_CONNECTION && $(is_ssh) == "yes" ]]; then
   export SSH_CONNECTION=$(is_ssh)
 fi
 
+for file in ~/.shell/envs.sh.d/**/*.sh; do
+    source "$file"
+done
