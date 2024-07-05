@@ -138,9 +138,11 @@ source "$OSH"/oh-my-bash.sh
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
-[[ ! -f ~/.shell/paths.zsh ]] || source ~/.shell/paths.zsh
-[[ ! -f ~/.shell/envs.zsh ]] || source ~/.shell/envs.zsh
-[[ ! -f ~/.shell/aliases.zsh ]] || source ~/.shell/aliases.zsh
+# source .shell/*.sh files
+[[ ! -f ~/.shell/functions.sh ]] || source ~/.shell/functions.sh
+[[ ! -f ~/.shell/paths.sh ]] || source ~/.shell/paths.sh
+[[ ! -f ~/.shell/envs.sh ]] || source ~/.shell/envs.sh
+[[ ! -f ~/.shell/aliases.sh ]] || source ~/.shell/aliases.sh
 
 # Bootstrap asdf-vm
 [[ ! -f ~/.asdf/asdf.sh ]] || source ~/.asdf/asdf.sh
