@@ -9,11 +9,6 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 
-# create init completions cache dir
-mkdir -p ~/.cache/zinit/completions
-# create a empty file to avoid zsh glob error
-echo "" > ~/.cache/zinit/completions/_
-
 # install, if not installed yet, and source zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -31,7 +26,6 @@ zinit light asdf-vm/asdf
 
 # load/install Oh My Zsh plugins
 zinit snippet OMZP::sudo/sudo.plugin.zsh
-zinit snippet OMZP::docker/docker.plugin.zsh
 
 if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
     zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
