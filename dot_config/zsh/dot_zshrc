@@ -1,3 +1,8 @@
+# Create some bin symbolic links: fdfind => fd, batcat => bat, exa => eza
+[ -x "$(command -v fdfind)" ] && [ ! -L ~/.local/bin/fd ] && ln -sf "$(command -v fdfind)" ~/.local/bin/fd
+[ -x "$(command -v batcat)" ] && [ ! -L ~/.local/bin/bat ] && ln -sf "$(command -v batcat)" ~/.local/bin/bat
+[ -x "$(command -v exa)" ] && [ ! -x "$(command -v eza)" ] && [ ! -L ~/.local/bin/eza ] && ln -sf "$(command -v exa)" ~/.local/bin/eza
+
 # Create XDG dirs
 [ -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh" ] || mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh"
 [ -d "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh" ] || mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh"
