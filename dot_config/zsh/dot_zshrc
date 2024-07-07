@@ -1,5 +1,9 @@
+# Create XDG dirs
+[ -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh" ] || mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh"
+[ -d "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh" ] || mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh"
+
 # history setup
-HISTFILE=$HOME/.zsh_history
+HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 SAVEHIST=50000
 HISTSIZE=50000
 setopt share_history 
@@ -41,7 +45,8 @@ fi
 
 # compinit
 autoload -U compinit
-compinit
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
+compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 
 # load custom completions
 [[ ! -f $ZDOTDIR/completions.zsh ]] || source $ZDOTDIR/completions.zsh
