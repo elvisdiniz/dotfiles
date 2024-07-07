@@ -1,5 +1,3 @@
-ZSH="$HOME/.zsh"
-
 # history setup
 HISTFILE=$HOME/.zsh_history
 SAVEHIST=50000
@@ -38,15 +36,15 @@ fi
 [[ ! -f ~/.shell/aliases.sh ]] || source ~/.shell/aliases.sh
 
 # souce .zsh/*.zsh files
-[[ ! -f ~/.zsh/plugins.zsh ]] || source ~/.zsh/plugins.zsh
-[[ ! -f ~/.zsh/keybindings.zsh ]] || source ~/.zsh/keybindings.zsh
+[[ ! -f $ZDOTDIR/plugins.zsh ]] || source $ZDOTDIR/plugins.zsh
+[[ ! -f $ZDOTDIR/keybindings.zsh ]] || source $ZDOTDIR/keybindings.zsh
 
 # compinit
 autoload -U compinit
 compinit
 
 # load custom completions
-[[ ! -f ~/.zsh/completions.zsh ]] || source ~/.zsh/completions.zsh
+[[ ! -f $ZDOTDIR/completions.zsh ]] || source $ZDOTDIR/completions.zsh
 
 zinit cdreplay
 

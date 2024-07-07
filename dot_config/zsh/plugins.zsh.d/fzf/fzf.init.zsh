@@ -1,5 +1,5 @@
 # Set up fzf key bindings and fuzzy completion
-source <(~/.local/bin/fzf --zsh)
+source <(fzf --zsh)
 
 # --- apply catppuccin mocha theme ---
 export FZF_DEFAULT_OPTS=" \
