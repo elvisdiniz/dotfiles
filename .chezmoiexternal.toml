@@ -4,7 +4,7 @@
     exact = false
     stripComponents = 1
     refreshPeriod = "168h"
-[".tmux/plugins/tpm"]
+[".config/tmux/plugins/tpm"]
     type = "archive"
     url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
     exact = false
