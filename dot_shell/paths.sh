@@ -4,6 +4,6 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # set PATH so it includes user's private .local/bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+export BIN_HOME="${HOME}/.local/bin"
+[ -d "$BIN_HOME" ] || mkdir -p "$BIN_HOME"
+PATH="$BIN_HOME:$PATH"
