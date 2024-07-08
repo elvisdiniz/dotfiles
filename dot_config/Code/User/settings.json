@@ -23,6 +23,8 @@
   "editor.renderLineHighlight": "gutter",
   "editor.rulers": [80, 120],
   "editor.unicodeHighlight.nonBasicASCII": false,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 120,
   "explorer.confirmDragAndDrop": false,
   "files.autoSave": "afterDelay",
   "files.autoSaveWhenNoErrors": true,
@@ -30,6 +32,7 @@
   "git.enableSmartCommit": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "symbols.hidesExplorerArrows": false,
+  "tabnine.experimentalAutoImports": true,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -38,5 +41,4 @@
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
   "workbench.startupEditor": "newUntitledFile",
-  "tabnine.experimentalAutoImports": true
 }
