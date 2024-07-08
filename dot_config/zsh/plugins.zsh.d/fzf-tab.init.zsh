@@ -29,6 +29,6 @@ zstyle ':fzf-tab:complete:ssh:*' fzf-preview "kdig \$word"
 zstyle ':fzf-tab:complete:*' fzf-preview "if [ ! -z \$realpath  ]; then if [ -d \$realpath ]; then ${show_dir_preview} \$realpath| head -200; elif [ -f \$realpath ];then ${show_file_preview} \$realpath ; else echo ''; fi; fi"
 
 # switch group using `<` and `>`
-zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 fi
