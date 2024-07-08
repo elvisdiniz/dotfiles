@@ -27,6 +27,7 @@ autoload -Uz _zinit
 
 # load/install zinit plugins
 [ -x "$(command -v fzf)" ] && zinit light Aloxaf/fzf-tab
+[ -x "$(command -v fzf)" ] && zinit light Freed-Wu/fzf-tab-source
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light asdf-vm/asdf
