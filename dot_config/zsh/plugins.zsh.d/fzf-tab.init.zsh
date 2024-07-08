@@ -1,7 +1,5 @@
 if [ -x "$(command -v fzf)" ]; then
 
-[ -f ~/.local/scripts/lessfilter.sh ] && chmod +x ~/.local/scripts/lessfilter.sh
-
 # Configure fzf-tab
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
