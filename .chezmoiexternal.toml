@@ -1,4 +1,4 @@
-[".oh-my-bash"]
+[".local/share/oh-my-bash"]
     type = "archive"
     url = "https://github.com/ohmybash/oh-my-bash/archive/master.tar.gz"
     exact = false
