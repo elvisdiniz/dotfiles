@@ -1,0 +1,4 @@
+prefix=${NPM_PREFIX_HOME}
+cache=${NPM_CACHE_HOME}
+init-module=${NPM_INIT_MODULE}
+logs-dir=${NPM_LOGS_DIR}
