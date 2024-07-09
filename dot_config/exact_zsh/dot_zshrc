@@ -36,8 +36,11 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # load/install zinit plugins
-[ -x "$(command -v fzf)" ] && zinit light Aloxaf/fzf-tab
-[ -x "$(command -v fzf)" ] && zinit light Freed-Wu/fzf-tab-source
+# install fzf related plugins only if fzf is available
+if [ -x "$(command -v fzf)" ]; then
+    zinit light Aloxaf/fzf-tab
+    zinit light Freed-Wu/fzf-tab-source
+fi
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice depth=1
