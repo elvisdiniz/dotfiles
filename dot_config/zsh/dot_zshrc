@@ -30,7 +30,6 @@ autoload -Uz _zinit
 [ -x "$(command -v fzf)" ] && zinit light Freed-Wu/fzf-tab-source
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
-zinit light asdf-vm/asdf
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 
