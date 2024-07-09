@@ -40,11 +40,11 @@ if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
     zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
 fi
 
-# source .shell/*.sh files
-[[ ! -f ~/.shell/functions.sh ]] || source ~/.shell/functions.sh
-[[ ! -f ~/.shell/paths.sh ]] || source ~/.shell/paths.sh
-[[ ! -f ~/.shell/envs.sh ]] || source ~/.shell/envs.sh
-[[ ! -f ~/.shell/aliases.sh ]] || source ~/.shell/aliases.sh
+export SHELL_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
+[ -f "${SHELL_CONFIG_HOME}/functions.sh" ] && source "${SHELL_CONFIG_HOME}/functions.sh"
+[ -f "${SHELL_CONFIG_HOME}/paths.sh" ] && source "${SHELL_CONFIG_HOME}/paths.sh"
+[ -f "${SHELL_CONFIG_HOME}/envs.sh" ] && source "${SHELL_CONFIG_HOME}/envs.sh"
+[ -f "${SHELL_CONFIG_HOME}/aliases.sh" ] && source "${SHELL_CONFIG_HOME}/aliases.sh"
 
 # souce .zsh/*.zsh files
 [[ ! -f $ZDOTDIR/plugins.zsh ]] || source $ZDOTDIR/plugins.zsh
