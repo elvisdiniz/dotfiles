@@ -43,10 +43,10 @@ if [ -x "$(command -v fzf)" ]; then
 fi
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
-zinit ice depth=1
 
 # don't load zsh-vi-mode plugin if zsh don't have pcre module on freebsd
 if [ $(uname -s) != "FreeBSD" ] || [ "$options[re_match_pcre]" = "on" ]; then
+    zinit ice depth=1
     zinit light jeffreytse/zsh-vi-mode
 fi
 
