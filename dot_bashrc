@@ -4,6 +4,9 @@ case $- in
     *) return;;
 esac
 
+BASH_STATE_HOME="${XDG_STATE_HOME:-${HOME}/.local/state}/bash"
+[ -d "${BASH_STATE_HOME}" ] || mkdir -p "${BASH_STATE_HOME}"
+
 # Path to your oh-my-bash installation.
 export OSH="${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-bash"
 
@@ -60,6 +63,7 @@ DISABLE_AUTO_UPDATE="true"
 # * '[yyyy-mm-dd]'   # [yyyy-mm-dd] + [time] with colors
 # If not set, the default value is 'yyyy-mm-dd'.
 # HIST_STAMPS='yyyy-mm-dd'
+export HISTFILE="${BASH_STATE_HOME}/history"
 
 # Uncomment the following line if you do not want OMB to overwrite the existing
 # aliases by the default OMB aliases defined in lib/*.sh
