@@ -7,3 +7,4 @@
 .asdf
 .ansible
 .tmux
+.zcompdump*
