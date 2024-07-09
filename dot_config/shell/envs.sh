@@ -1,3 +1,3 @@
-for file in ~/.shell/envs.sh.d/**/*.sh; do
+for file in ${SHELL_CONFIG_HOME}/envs.sh.d/**/*.sh; do
     source "$file"
 done
