@@ -1,3 +1,3 @@
-if [[ -z $SSH_CONNECTION && $(is_ssh) == "yes" ]]; then
-    export SSH_CONNECTION=$(is_ssh)
+if test -z "$SSH_CONNECTION" && is_ssh.sh; then
+    export SSH_CONNECTION=yes
 fi
