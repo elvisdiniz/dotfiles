@@ -4,6 +4,8 @@ case $- in
     *) return;;
 esac
 
+$HOME/.local/scripts/create_bin_symlinks.sh
+
 BASH_STATE_HOME="${XDG_STATE_HOME:-${HOME}/.local/state}/bash"
 [ -d "${BASH_STATE_HOME}" ] || mkdir -p "${BASH_STATE_HOME}"
 
