@@ -26,9 +26,6 @@ let g:netrw_home = $XDG_DATA_HOME."/vim"
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
 call mkdir($XDG_STATE_HOME."/vim", 'p', 0700)
 
-" Use the Catppuccin Mocha theme
-colorscheme catppuccin_mocha
-
 " Make Vim more useful
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
@@ -114,3 +111,13 @@ endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
+
+call plug#begin()
+
+" List your plugins here
+Plug 'tpope/vim-sensible'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+
+call plug#end()
+
+colorscheme catppuccin_mocha
