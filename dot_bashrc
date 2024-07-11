@@ -6,8 +6,7 @@ esac
 
 $HOME/.local/scripts/create_bin_symlinks.sh
 
-BASH_STATE_HOME="${XDG_STATE_HOME:-${HOME}/.local/state}/bash"
-[ -d "${BASH_STATE_HOME}" ] || mkdir -p "${BASH_STATE_HOME}"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/init.sh"
 
 # Path to your oh-my-bash installation.
 export OSH="${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-bash"
@@ -145,11 +144,6 @@ source "$OSH"/oh-my-bash.sh
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
-# source .shell/*.sh files
-export SHELL_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
-[ -f "${SHELL_CONFIG_HOME}/paths.sh" ] && source "${SHELL_CONFIG_HOME}/paths.sh"
-[ -f "${SHELL_CONFIG_HOME}/envs.sh" ] && source "${SHELL_CONFIG_HOME}/envs.sh"
-[ -f "${SHELL_CONFIG_HOME}/aliases.sh" ] && source "${SHELL_CONFIG_HOME}/aliases.sh"
 
 [[ ! -x "$(command -v zoxide)" ]] || eval "$(zoxide init --cmd cd bash)"
 
