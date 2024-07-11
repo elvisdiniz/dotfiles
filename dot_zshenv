@@ -1,1 +1,4 @@
-[[ -z $ZDOTDIR ]] && export ZDOTDIR=$HOME/.config/zsh
+[ -z $ZDOTDIR ] && export ZDOTDIR=$HOME/.config/zsh
+
+# fix macos zsh bug when connecting via a terminal diferent of xterm
+[ $(uname -s) = 'Darwin' ] && [[ "$TERM" != xterm* ]] && export TERM=xterm-256color
