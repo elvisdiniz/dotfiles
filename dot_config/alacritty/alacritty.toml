@@ -9,9 +9,5 @@ import = [
 [font]
 normal.family = "MesloLGS Nerd Font Mono"
 
-[shell]
-program = "/usr/bin/zsh"
-args = ["-l", "-c", "tmux attach || tmux"]
-
 [window]
 startup_mode = "Maximized"
