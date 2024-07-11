@@ -10,12 +10,10 @@ fi
 
 $HOME/.local/scripts/create_bin_symlinks.sh
 
-# Create XDG dirs
-[ -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh" ] || mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh"
-[ -d "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh" ] || mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/zsh"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/init.sh"
 
 # history setup
-HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
+HISTFILE="${ZSH_STATE_HOME}/history"
 SAVEHIST=50000
 HISTSIZE=50000
 setopt share_history 
@@ -53,11 +51,6 @@ zinit snippet OMZP::sudo/sudo.plugin.zsh
 if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
     zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
 fi
-
-export SHELL_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
-[ -f "${SHELL_CONFIG_HOME}/paths.sh" ] && source "${SHELL_CONFIG_HOME}/paths.sh"
-[ -f "${SHELL_CONFIG_HOME}/envs.sh" ] && source "${SHELL_CONFIG_HOME}/envs.sh"
-[ -f "${SHELL_CONFIG_HOME}/aliases.sh" ] && source "${SHELL_CONFIG_HOME}/aliases.sh"
 
 # souce .zsh/*.zsh files
 [[ ! -f $ZDOTDIR/plugins.zsh ]] || source $ZDOTDIR/plugins.zsh
