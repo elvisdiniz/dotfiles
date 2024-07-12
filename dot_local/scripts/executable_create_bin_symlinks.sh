@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 [ -x "$(command -v fdfind)" ] && [ ! -L $HOME/.local/bin/fd ] && ln -sf "$(command -v fdfind)" $HOME/.local/bin/fd
 [ ! -x "$(command -v fdfind)" ] && [ -L $HOME/.local/bin/fd ] && rm $HOME/.local/bin/fd
