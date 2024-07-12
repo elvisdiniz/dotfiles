@@ -151,6 +151,7 @@ $SCRIPTS_HOME/install_chezmoi.sh
 [ -x $BIN_HOME/chezmoi ] && eval "$(chezmoi completion bash)"
 
 $SCRIPTS_HOME/install_starship.sh
+[ -x $BIN_HOME/starship ] && eval "$(starship completions bash)"
 
 eval "$(starship init bash)"
 
