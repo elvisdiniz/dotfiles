@@ -66,7 +66,7 @@ compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 
 zinit cdreplay
 
-$SCRIPTS_HOME/starship_install.sh
+$SCRIPTS_HOME/install_starship.sh
 
 # create starship prompt
 eval "$(starship init zsh)"

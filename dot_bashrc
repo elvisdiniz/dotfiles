@@ -147,7 +147,7 @@ source "$OSH"/oh-my-bash.sh
 
 [[ ! -x "$(command -v zoxide)" ]] || eval "$(zoxide init --cmd cd bash)"
 
-$SCRIPTS_HOME/starship_install.sh
+$SCRIPTS_HOME/install_starship.sh
 
 eval "$(starship init bash)"
 
