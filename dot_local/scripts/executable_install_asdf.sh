@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # clone asdf repository on $ASDF_DATA_DIR, default is $XDG_DATA_HOME/asdf
 # or update if is already there
