@@ -61,10 +61,8 @@ autoload -U compinit
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
 compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 
-# load custom completions
-[[ ! -f $ZDOTDIR/completions.zsh ]] || source $ZDOTDIR/completions.zsh
-
-zinit cdreplay
+$SCRIPTS_HOME/install_chezmoi.sh
+[ -x $BIN_HOME/chezmoi ] && eval "$(chezmoi completion zsh)"
 
 $SCRIPTS_HOME/install_starship.sh
 [ -x $BIN_HOME/starship ] && eval "$(starship completions zsh)"
