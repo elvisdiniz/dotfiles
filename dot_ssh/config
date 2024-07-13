@@ -1,17 +1,4 @@
-Host pfsense.home.elvisdiniz.com
-	HostName pfsense.home.elvisdiniz.com
-	User admin
-
-Host nas.home.elvisdiniz.com
-	HostName nas.home.elvisdiniz.com
-	User root
-
-Host libreelec.lan.home.elvisdiniz.com
-	HostName libreelec.lan.home.elvisdiniz.com
-	User root
+Include config.d/*
 
 Host *
 	ServerAliveInterval 50
-	User elvisdiniz
-	#PKCS11Provider /usr/lib/pkcs11/libtpm2_pkcs11.so
-
