@@ -39,6 +39,8 @@
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "vim.smartRelativeLine": true,
+  "vim.startInInsertMode": true,
   "window.menuBarVisibility": "hidden",
   "window.restoreWindows": "none",
   "workbench.colorTheme": "Catppuccin Mocha",
