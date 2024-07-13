@@ -6,6 +6,9 @@ import = [
   "~/.config/alacritty/themes/catppuccin-mocha.toml"
 ]
 
+[env]
+PATH = "/usr/local/bin:/usr/bin:/bin"
+
 [font]
 normal.family = "JetBrainsMono Nerd Font"
 
