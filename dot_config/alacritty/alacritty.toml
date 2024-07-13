@@ -7,7 +7,7 @@ import = [
 ]
 
 [font]
-normal.family = "MesloLGS Nerd Font Mono"
+normal.family = "JetBrainsMono Nerd Font"
 
 [window]
 startup_mode = "Maximized"
