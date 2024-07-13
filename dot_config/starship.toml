@@ -1,4 +1,15 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Move the directory to the second line
+format = '$all$shlvl$character'
+
 [sudo]
 disabled = false
+
+[shlvl]
+disabled = false
+format = '[$symbol]($style)'
+repeat = true
+symbol = '❯'
+repeat_offset = 1
+threshold = 0
