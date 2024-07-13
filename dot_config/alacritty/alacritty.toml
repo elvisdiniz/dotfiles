@@ -13,9 +13,9 @@ PATH = "/usr/local/bin:/usr/bin:/bin"
 normal.family = "JetBrainsMono Nerd Font"
 
 [shell]
-program = "tmux"
-args = ["new-session", "-A", "-D", "-s", "main"]
+program = "zellij"
+args = ["attach", "-c"]
 
 [window]
 startup_mode = "Maximized"
-padding = { x = 3, y = 3 }
+padding = { x = 5, y = 5 }
