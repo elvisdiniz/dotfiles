@@ -10,7 +10,8 @@
 				"tamasfe.even-better-toml",
 				"DavidAnson.vscode-markdownlint",
 				"fallenwood.vimL",
-				"foxundermoon.shell-format"
+				"foxundermoon.shell-format",
+				"kdl-org.kdl"
 			]
 		}
 	}
