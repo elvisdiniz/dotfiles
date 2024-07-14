@@ -9,9 +9,6 @@
     "GitHub.vscode-pull-request-github",
     "TabNine.tabnine-vscode"
   ],
-  "dev.containers.defaultFeatures": {
-    "ghcr.io/guiyomh/features/vim": {}
-  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.organizeImports": "always"
