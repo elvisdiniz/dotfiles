@@ -41,6 +41,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.smartRelativeLine": true,
   "vim.startInInsertMode": true,
+  "vim.useSystemClipboard": true,
   "window.menuBarVisibility": "hidden",
   "window.restoreWindows": "none",
   "workbench.colorTheme": "Catppuccin Mocha",
