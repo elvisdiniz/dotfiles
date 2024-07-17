@@ -38,4 +38,8 @@ vim.schedule(function()
   require "mappings"
 end)
 
+if vim.g.neovide then
+  vim.o.guifont = "JetBrainsMono Nerd Font:h10"
+end
+
 vim.wo.relativenumber = true
