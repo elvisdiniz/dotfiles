@@ -3,7 +3,6 @@
 [[ -x "$(command -v vim)" || ! -x "$(command -v vi)" ]] || alias vim="vi"
 [[ -x "$(command -v dig)" || ! -x "$(command -v kdig)" ]] || alias dig="kdig"
 [[ -x "$(command -v open)" || ! -x "$(command -v xdg-open)" ]] || alias open="xdg-open"
-[[ ! -x "$(command -v chezmoi)" ]] || alias chupg="chezmoi upgrade"; alias chupd="chezmoi update"
 [ -x "$(command -v wget)" ] && alias wget="wget --hsts-file=${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"
 
 ## wsl specific configs
