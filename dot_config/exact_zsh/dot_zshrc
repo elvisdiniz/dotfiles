@@ -3,7 +3,7 @@
 # 
 # how to build a a package from ports: https://www.cyberciti.biz/faq/install-ports-in-freebsd/
 # zvm bug: https://github.com/jeffreytse/zsh-vi-mode/issues/159
-if [ "$options[re_match_pcre]" = "off" ] && [ $(uname -s) = "FreeBSD" ]; then
+if [ "$options[re_match_pcre]" = "off" ] && [ -f /usr/local/lib/zsh/5.9/zsh/pcre.so ] && [ $(uname -s) = "FreeBSD" ] ; then
     setopt re_match_pcre
 fi
 ######################################################################################################################
