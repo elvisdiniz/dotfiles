@@ -43,6 +43,11 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 if [ $(uname -s) != "FreeBSD" ] || [ "$options[re_match_pcre]" = "on" ]; then
     zinit ice depth=1
     zinit light jeffreytse/zsh-vi-mode
+else
+    # fallback to zsh built in vi mode and enable OMZ vi-mode plugin
+    VI_MODE_SET_CURSOR=true
+    VI_MODE_CURSOR_INSERT=5
+    zinit snippet OMZP::vi-mode/vi-mode.plugin.zsh
 fi
 
 # load/install Oh My Zsh plugins
