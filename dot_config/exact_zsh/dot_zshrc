@@ -48,6 +48,7 @@ else
     # fallback to zsh built in vi mode and enable OMZ vi-mode plugin
     VI_MODE_SET_CURSOR=true
     VI_MODE_CURSOR_INSERT=5
+    bindkey '^f' autosuggest-accept
     zinit snippet OMZP::vi-mode/vi-mode.plugin.zsh
 fi
 
