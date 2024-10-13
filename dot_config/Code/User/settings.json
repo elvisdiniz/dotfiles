@@ -6,8 +6,7 @@
     "adpyke.codesnap",
     "donjayamanne.githistory",
     "eamodio.gitlens",
-    "GitHub.vscode-pull-request-github",
-    "TabNine.tabnine-vscode"
+    "GitHub.vscode-pull-request-github"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
