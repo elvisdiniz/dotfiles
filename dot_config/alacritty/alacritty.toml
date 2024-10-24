@@ -1,3 +1,19 @@
+
+[env]
+PATH = "/usr/local/bin:/usr/bin:/bin"
+
+[font]
+normal.family = "JetBrainsMono Nerd Font"
+
+[terminal.shell]
+program = "zellij"
+args = ["attach", "-c"]
+
+[window]
+startup_mode = "Maximized"
+padding = { x = 5, y = 5 }
+
+[general]
 import = [
   # uncomment the flavour you want below:
   # "~/.config/alacritty/catppuccin-latte.toml"
@@ -6,16 +22,4 @@ import = [
   "~/.config/alacritty/themes/catppuccin-mocha.toml"
 ]
 
-[env]
-PATH = "/usr/local/bin:/usr/bin:/bin"
-
-[font]
-normal.family = "JetBrainsMono Nerd Font"
-
-[shell]
-program = "zellij"
-args = ["attach", "-c"]
-
-[window]
-startup_mode = "Maximized"
-padding = { x = 5, y = 5 }
+[terminal]
