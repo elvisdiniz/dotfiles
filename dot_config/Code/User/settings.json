@@ -6,7 +6,9 @@
     "adpyke.codesnap",
     "donjayamanne.githistory",
     "eamodio.gitlens",
-    "GitHub.vscode-pull-request-github"
+    "GitHub.vscode-pull-request-github",
+    "GitHub.copilot",
+    "GitHub.copilot-chat"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
