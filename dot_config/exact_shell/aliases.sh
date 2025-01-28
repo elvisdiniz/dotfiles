@@ -18,3 +18,7 @@
 [[ ! -x "$(command -v ssh.exe)" ]] || alias ssh="ssh.exe"
 # create a alias to git.exe:
 [[ ! -x "$(command -v git.exe)" ]] || alias git="git.exe"
+
+# create lazydocker alias
+[[ -x "$(command -v lazydocker)" ]] && alias lzd="lazydocker"
+
