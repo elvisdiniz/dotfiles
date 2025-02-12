@@ -16,5 +16,10 @@ if status is-interactive
     zoxide init --cmd cd fish | source
   end
 
+  if test -x "$(command -v fzf)"
+    and fzf --fish 2> /dev/null > /dev/null
+    fzf --fish | source
+  end
+
   starship init fish | source
 end
