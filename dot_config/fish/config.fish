@@ -12,5 +12,9 @@ if status is-interactive
     eval "$(starship completions fish)"
   end
 
+  if test -x "$(command -v zoxide)"
+    zoxide init --cmd cd fish | source
+  end
+
   starship init fish | source
 end
