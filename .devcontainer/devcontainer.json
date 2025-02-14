@@ -11,7 +11,8 @@
 				"DavidAnson.vscode-markdownlint",
 				"fallenwood.vimL",
 				"foxundermoon.shell-format",
-				"kdl-org.kdl"
+				"kdl-org.kdl",
+				"bmalehorn.vscode-fish"
 			]
 		}
 	}
