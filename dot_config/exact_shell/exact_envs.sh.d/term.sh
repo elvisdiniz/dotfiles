@@ -7,4 +7,6 @@ if test -x "$(command -v infocmp)"; then
             export TERM=xterm
         fi
     fi
+else
+    export TERM=xterm
 fi
