@@ -91,12 +91,15 @@ end
 
 # fallback to xterm-256color or xterm if $TERM is no available
 if test -x "$(command -v infocmp)"
-  and not infocmp $TERM 2> /dev/null > /dev/null
-  if infocmp xterm-256color 2> /dev/null > /dev/null
-    set -gx TERM xterm-256color
-  else
-    set -gx TERM xterm
+  if not infocmp $TERM 2> /dev/null > /dev/null
+    if infocmp xterm-256color 2> /dev/null > /dev/null
+      set -gx TERM xterm-256color
+    else
+      set -gx TERM xterm
+    end
   end
+else
+  set -gx TERM xterm
 end
 
 if test -x "$(command -v vim)"
