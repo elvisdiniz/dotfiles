@@ -1,3 +1,13 @@
 theme = catppuccin-mocha
 background-opacity = 0.9
 font-family = "JetBrainsMono Nerd Font"
+
+keybind = ctrl+b>h=goto_split:left
+keybind = ctrl+b>l=goto_split:right
+keybind = ctrl+b>j=goto_split:down
+keybind = ctrl+b>k=goto_split:up
+
+keybind = ctrl+b>\=new_split:right
+keybind = ctrl+b>-=new_split:down
+
+keybind = ctrl+b>c=new_tab
