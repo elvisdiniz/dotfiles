@@ -2,12 +2,5 @@ theme = catppuccin-mocha
 background-opacity = 0.9
 font-family = "JetBrainsMono Nerd Font"
 
-keybind = ctrl+b>h=goto_split:left
-keybind = ctrl+b>l=goto_split:right
-keybind = ctrl+b>j=goto_split:down
-keybind = ctrl+b>k=goto_split:up
+command = zsh --login -c "if test -x $(command -v tmux); then; tmux new-session -A -D; else; zsh; fi"
 
-keybind = ctrl+b>\=new_split:right
-keybind = ctrl+b>-=new_split:down
-
-keybind = ctrl+b>c=new_tab
