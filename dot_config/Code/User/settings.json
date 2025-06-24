@@ -11,7 +11,10 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "gutter",
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
@@ -33,18 +36,24 @@
   "remote.autoForwardPortsSource": "hybrid",
   "remote.defaultExtensionsIfInstalledLocally": [
     "adpyke.codesnap",
-    "donjayamanne.githistory",
-    "eamodio.gitlens",
     "GitHub.vscode-pull-request-github",
     "GitHub.copilot",
     "GitHub.copilot-chat",
-    "ms-azuretools.vscode-docker",
-    "actboy168.tasks"
+    "ms-azuretools.vscode-containers",
+    "actboy168.tasks",
+    "eamodio.gitlens",
+    "donjayamanne.githistory"
   ],
+  "[dockercompose]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+  },
   "[dockerfile]": {
     "editor.quickSuggestions": {
       "strings": true
     },
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
   },
+  "dev.containers.dockerPath": "podman",
+  "dev.containers.dockerComposePath": "podman-compose",
+  "dev.containers.dockerSocketPath": "/run/user/1000/podman/podman.sock"
 }
