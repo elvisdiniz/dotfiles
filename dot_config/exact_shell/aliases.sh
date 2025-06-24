@@ -11,6 +11,9 @@
 [[ -x "$(command -v open)" || ! -x "$(command -v xdg-open)" ]] || alias open="xdg-open"
 [ -x "$(command -v wget)" ] && alias wget="wget --hsts-file=${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"
 
+# alias docker to podman if docker is not installed an podman is
+[[ ! -x "$(command -v docker)" && -x "$(command -v podman)" ]] && alias docker="podman"
+
 ## wsl specific configs
 # create a alias to notepad++:
 [[ ! -x "$(command -v notepad++.exe)" ]] || alias npp="notepad++.exe"
