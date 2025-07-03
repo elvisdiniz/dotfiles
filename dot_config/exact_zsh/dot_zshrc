@@ -69,10 +69,12 @@ zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompca
 compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 
 $SCRIPTS_HOME/install_chezmoi.sh
-[ -x $BIN_HOME/chezmoi ] && eval "$(chezmoi completion zsh)"
+[[ -x $BIN_HOME/chezmoi ]] && eval "$(chezmoi completion zsh)"
 
 $SCRIPTS_HOME/install_starship.sh
-[ -x $BIN_HOME/starship ] && eval "$(starship completions zsh)"
+[[ -x $BIN_HOME/starship ]] && eval "$(starship completions zsh)"
+
+[[ ! -x $(command -v asdf) ]] && [[ -x $HOME/.local/bin/asdf ]] && eval "$(asdf completion zsh)"
 
 # create starship prompt
 eval "$(starship init zsh)"
