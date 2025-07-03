@@ -12,3 +12,7 @@ PATH="$BIN_HOME:$PATH"
 export SCRIPTS_HOME="${HOME}/.local/scripts"
 [ -d "$SCRIPTS_HOME" ] || mkdir -p "$SCRIPTS_HOME"
 PATH="$SCRIPTS_HOME:$PATH"
+
+export NPM_BIN="${HOME}/.local/share/npm/bin"
+[ -d "$NPM_BIN" ] && PATH="$NPM_BIN:$PATH"
+
