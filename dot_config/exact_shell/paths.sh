@@ -16,3 +16,4 @@ PATH="$SCRIPTS_HOME:$PATH"
 export NPM_BIN="${HOME}/.local/share/npm/bin"
 [ -d "$NPM_BIN" ] && PATH="$NPM_BIN:$PATH"
 
+[[ -x "$(command -v asdf)" ]] && PATH="${ASDF_DATA_DIR:-$HOME/.local/share/asdf}/shims:$PATH"
