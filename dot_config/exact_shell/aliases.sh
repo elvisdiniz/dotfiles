@@ -25,3 +25,6 @@
 # create lazydocker alias
 [[ -x "$(command -v lazydocker)" ]] && alias lzd="lazydocker"
 
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
