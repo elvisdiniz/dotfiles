@@ -94,14 +94,14 @@ Here are instructions to install some of the programs used in these dotfiles on 
 
 ```bash
 sudo pacman -Syu
-sudo pacman -S eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo pacman -S chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
 ```
 
 #### Ubuntu / Debian
 
 ```bash
 sudo apt update
-sudo apt install eza bat curl git vim fzf fd-find ripgrep neovim bottom fish zsh
+sudo apt install eza bat curl git vim fzf fd-find ripgrep neovim btm fish zsh
 # For fd, the package name is fd-find on Ubuntu/Debian
 # For neovim, you might need to add a PPA for the latest version:
 # sudo add-apt-repository ppa:neovim-ppa/stable
@@ -113,14 +113,15 @@ sudo apt install eza bat curl git vim fzf fd-find ripgrep neovim bottom fish zsh
 
 ```bash
 sudo apk update
-sudo apk add eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo apk add chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
 ```
 
 #### FreeBSD
 
 ```bash
+
 sudo pkg update
-sudo pkg install eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo pkg install chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
 ```
 
 #### macOS (via Homebrew)
@@ -129,5 +130,5 @@ sudo pkg install eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
 # Install Homebrew if you haven't already:
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+brew install chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
 ```
