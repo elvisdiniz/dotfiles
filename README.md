@@ -94,14 +94,43 @@ Here are instructions to install some of the programs used in these dotfiles on 
 
 ```bash
 sudo pacman -Syu
-sudo pacman -S chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo pacman -S chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 ```
 
-#### Ubuntu / Debian
+#### Debian 12-
 
 ```bash
 sudo apt update
-sudo apt install eza bat curl git vim fzf fd-find ripgrep neovim btm fish zsh
+sudo apt install exa bat curl git vim fzf fd-find ripgrep neovim fish zsh
+# For fd, the package name is fd-find on Ubuntu/Debian
+#
+# The recommended way to install zoxide is via the install script:
+# curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+#
+# For neovim, you might need to add a PPA for the latest version:
+# sudo add-apt-repository ppa:neovim-ppa/stable
+# sudo apt update
+# sudo apt install neovim
+```
+
+#### Ubuntu 24.10-
+
+```bash
+sudo apt update
+sudo apt install eza bat curl git vim fastfetch fzf fd-find ripgrep neovim btm fish zsh
+# For fd, the package name is fd-find on Ubuntu/Debian
+#
+# For neovim, you might need to add a PPA for the latest version:
+# sudo add-apt-repository ppa:neovim-ppa/stable
+# sudo apt update
+# sudo apt install neovim
+```
+
+#### Ubuntu 25.04+ / Debian 13+
+
+```bash
+sudo apt update
+sudo apt install starship eza bat curl git vim fastfetch fzf fd-find ripgrep neovim btm fish zoxide zsh
 # For fd, the package name is fd-find on Ubuntu/Debian
 # For neovim, you might need to add a PPA for the latest version:
 # sudo add-apt-repository ppa:neovim-ppa/stable
@@ -113,7 +142,7 @@ sudo apt install eza bat curl git vim fzf fd-find ripgrep neovim btm fish zsh
 
 ```bash
 sudo apk update
-sudo apk add chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo apk add chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 ```
 
 #### FreeBSD
@@ -121,7 +150,7 @@ sudo apk add chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom 
 ```bash
 
 sudo pkg update
-sudo pkg install chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+sudo pkg install chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 ```
 
 #### macOS (via Homebrew)
@@ -130,5 +159,5 @@ sudo pkg install chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bot
 # Install Homebrew if you haven't already:
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install chezmoi starship eza bat curl git vim fzf fd ripgrep neovim bottom fish zsh
+brew install chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 ```
