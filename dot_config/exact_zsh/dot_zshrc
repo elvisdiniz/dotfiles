@@ -74,7 +74,7 @@ $SCRIPTS_HOME/install_chezmoi.sh
 $SCRIPTS_HOME/install_starship.sh
 [[ -x $BIN_HOME/starship ]] && eval "$(starship completions zsh)"
 
-[[ ! -x $(command -v asdf) ]] && [[ -x $HOME/.local/bin/asdf ]] && eval "$(asdf completion zsh)"
+[[ $(command -v asdf) == $HOME/.local/bin/asdf ]] && eval "$(asdf completion zsh)"
 
 # create starship prompt
 eval "$(starship init zsh)"
