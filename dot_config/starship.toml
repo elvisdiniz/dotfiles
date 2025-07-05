@@ -16,6 +16,9 @@ symbol = '❯'
 repeat_offset = 1
 threshold = 0
 
+[git_metrics]
+disabled = false
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
