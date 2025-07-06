@@ -4,6 +4,12 @@
 	"name": "Dotfiles",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:alpine-3.21",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installOhMyZsh": false,
+			"installOhMyZshConfig": false
+		}
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -13,7 +19,11 @@
 				"foxundermoon.shell-format",
 				"kdl-org.kdl",
 				"bmalehorn.vscode-fish"
-			]
+			],
+			"settings": {
+				"dotfiles.repository": "elvisdiniz/dotfiles",
+				"go.toolsManagement.autoUpdate": true
+			}
 		}
 	}
 
