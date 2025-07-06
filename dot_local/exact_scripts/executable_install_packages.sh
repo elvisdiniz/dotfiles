@@ -27,19 +27,31 @@ run_as_root() {
     fi
 }
 
+install_package_asdf() {
+    version="$1"
+    os="$2"
+    platform="$3"
+    cd "$(mktemp -d)"
+    wget https://github.com/asdf-vm/asdf/releases/download/v$version/asdf-v$version-$os-$platform.tar.gz && \
+    mkdir -p $HOME/.local/bin && \
+    tar -xzf asdf-v$version-$os-$platform.tar.gz -C $HOME/.local/bin && \
+    rm asdf-v$version-$os-$platform.tar.gz
+    cd -
+}
+
 # Function to install packages on Arch Linux
 install_arch() {
     info "Installing packages for Arch Linux..."
     run_as_root pacman -Syu --noconfirm
     run_as_root pacman -S --noconfirm --needed \
-        chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 }
 
 # Function to install packages on Debian/Ubuntu
 install_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="bat curl git vim fzf fd-find ripgrep neovim fish zsh"
+    local packages="bat curl wget git vim fzf fd-find ripgrep neovim fish zsh"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages eza fastfetch btm"
@@ -66,13 +78,13 @@ install_debian_ubuntu() {
 install_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 }
 
 # Function to install packages on Fedora
 install_fedora() {
     info "Installing packages for Fedora..."
-    local packages="bat curl git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh"
+    local packages="bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh"
     if [ "$VERSION_ID" -lt 42 ]; then
         packages="$packages eza"
     fi
@@ -83,7 +95,7 @@ install_fedora() {
 install_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
-    run_as_root pkg install -y chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 }
 
 # Function to install packages on macOS
@@ -93,12 +105,13 @@ install_macos() {
         error "Homebrew is not installed. Please install it first."
         exit 1
     fi
-    brew install chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    brew install chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 }
 
 # Main installation logic
 main() {
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
 
     case "$os" in
     "linux")
@@ -127,9 +140,11 @@ main() {
             exit 1
             ;;
         esac
+        install_package_asdf "0.18.0" "$os" "$machine"
         ;;
     "darwin")
         install_macos
+        install_package_asdf "0.18.0" "$os" "$machine"
         ;;
     "freebsd")
         install_freebsd
