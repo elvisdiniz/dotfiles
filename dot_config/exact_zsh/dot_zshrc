@@ -59,6 +59,14 @@ if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
     zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
 fi
 
+if [[ $(command -v asdf) == $HOME/.local/bin/asdf ]]; then
+    if [ ! -f "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf" ]; then
+        mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+        asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
+    fi
+    zinit add-fpath ${ASDF_DATA_DIR:-$HOME/.asdf}/completions
+fi
+
 # souce .zsh/*.zsh files
 [[ ! -f $ZDOTDIR/plugins.zsh ]] || source $ZDOTDIR/plugins.zsh
 [[ ! -f $ZDOTDIR/keybindings.zsh ]] || source $ZDOTDIR/keybindings.zsh
@@ -73,8 +81,6 @@ $SCRIPTS_HOME/install_chezmoi.sh
 
 $SCRIPTS_HOME/install_starship.sh
 [[ -x $BIN_HOME/starship ]] && eval "$(starship completions zsh)"
-
-[[ $(command -v asdf) == $HOME/.local/bin/asdf ]] && eval "$(asdf completion zsh)"
 
 # create starship prompt
 eval "$(starship init zsh)"
