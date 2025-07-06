@@ -145,6 +145,12 @@ sudo apk update
 sudo apk add chezmoi starship eza bat curl git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
 ```
 
+#### Fedora
+
+```bash
+sudo dnf install bat curl git vim fastfetch fzf fd ripgrep neovim fish zoxide zsh
+```
+
 #### FreeBSD
 
 ```bash
