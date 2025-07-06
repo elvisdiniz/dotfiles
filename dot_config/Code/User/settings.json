@@ -58,5 +58,13 @@
     "plaintext": false,
     "markdown": true,
     "scminput": false
+  },
+  "dotfiles.repository": "elvisdiniz/dotfiles",
+  "dev.containers.defaultFeatures": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": false,
+      "installOhMyZshConfig": false
+    }
   }
 }
