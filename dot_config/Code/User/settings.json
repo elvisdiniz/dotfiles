@@ -11,10 +11,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "gutter",
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
@@ -24,7 +21,6 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "symbols.hidesExplorerArrows": false,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -42,7 +38,8 @@
     "ms-azuretools.vscode-containers",
     "actboy168.tasks",
     "eamodio.gitlens",
-    "donjayamanne.githistory"
+    "donjayamanne.githistory",
+    "davidanson.vscode-markdownlint"
   ],
   "[dockercompose]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-containers"
@@ -55,5 +52,11 @@
   },
   "dev.containers.dockerPath": "podman",
   "dev.containers.dockerComposePath": "podman-compose",
-  "dev.containers.dockerSocketPath": "/run/user/1000/podman/podman.sock"
+  "dev.containers.dockerSocketPath": "/run/user/1000/podman/podman.sock",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  }
 }
