@@ -9,6 +9,57 @@ has_cmd() {
 	done
 }
 
+display_image() {
+	img_file="$1"
+
+	if [ ! -f "$img_file" ]; then
+		echo "File not found: $img_file" >&2
+		return 1
+	fi
+
+	# iTerm2
+	if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+		img_base64=$(base64 <"$img_file")
+		printf '\033]1337;File=name=%s;inline=1:%s\a\n' \
+			"$(basename "$img_file" | base64)" "$img_base64"
+
+	# Kitty
+	elif [ -n "$KITTY_WINDOW_ID" ]; then
+		if command -v kitty >/dev/null; then
+			kitty +kitten icat "$img_file"
+		else
+			echo "Kitty is not installed, cannot display image." >&2
+			return 1
+		fi
+
+	# WezTerm (uses the same protocol as Kitty in practice)
+	elif [ "$TERM_PROGRAM" = "WezTerm" ]; then
+		if command -v wezterm >/dev/null; then
+			wezterm imgcat "$img_file"
+		elif command -v kitty >/dev/null; then
+			kitty +kitten icat "$img_file"
+		else
+			echo "WezTerm or Kitty not found." >&2
+			return 1
+		fi
+
+	# Sixel-capable terminals
+	elif infocmp | grep -q 'sixel'; then
+		if command -v img2sixel >/dev/null; then
+			img2sixel "$img_file"
+		else
+			echo "img2sixel not installed." >&2
+			return 1
+		fi
+	# Chafa for terminals that support it
+	elif has_cmd chafa; then
+		chafa -f symbols "$1"
+	else
+		echo "This terminal does not support image rendering." >&2
+		return 1
+	fi
+}
+
 mime=$(file -Lbs --mime-type "$1")
 category=${mime%%/*}
 kind=${mime##*/}
@@ -96,14 +147,12 @@ elif [ "$kind" = javascript ]; then
 	fi
 # https://github.com/wofr06/lesspipe/pull/106
 elif [ "$category" = image ]; then
-	if has_cmd chafa; then
-		chafa -f symbols "$1"
-	fi
+	display_image "$1"
 	if has_cmd exiftool; then
 		exiftool "$1" | bat --color=always -plyaml
 	fi
 elif [ "$kind" = vnd.openxmlformats-officedocument.spreadsheetml.sheet ] || [ "$kind" = vnd.ms-excel ]; then
-    if has_cmd in2csv && has_cmd xsv && has_cmd bat; then
+	if has_cmd in2csv && has_cmd xsv && has_cmd bat; then
 		in2csv "$1" | xsv table | bat -ltsv --color=always
 	fi
 # https://github.com/wofr06/lesspipe/pull/117
@@ -114,7 +163,7 @@ elif [ "$category" = text ]; then
 		pygmentize "$1" | less
 	fi
 elif has_cmd lesspipe.sh; then
-    lesspipe.sh "$1"
+	lesspipe.sh "$1"
 else
 	exit 1
 fi

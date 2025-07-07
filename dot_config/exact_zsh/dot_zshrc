@@ -33,8 +33,39 @@ autoload -Uz _zinit
 # load/install zinit plugins
 # install fzf related plugins only if fzf is available
 if [ -x "$(command -v fzf)" ]; then
+    export FZF_DEFAULT_OPTS=" \
+    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+    --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+    export FZF_TMUX_OPTS="--height 40% --tmux bottom,40% --layout reverse --border top"
+
     zinit light Aloxaf/fzf-tab
     zinit light Freed-Wu/fzf-tab-source
+
+    # Configure fzf-tab
+    # disable sort when completing `git checkout`
+    zstyle ':completion:*:git-checkout:*' sort false
+    # set descriptions format to enable group support
+    # NOTE: don't use escape sequences here, fzf-tab will ignore them
+    zstyle ':completion:*:descriptions' format '[%d]'
+    # set list-colors to enable filename colorizing
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+    # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+    zstyle ':completion:*' menu no
+    # preview command for fzf-tab
+    zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
+    export LESSOPEN="|~/.local/scripts/lessfilter.sh %s"
+
+    zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+    zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c 4 $word'
+    zstyle ':fzf-tab:complete:tldr:*' fzf-preview 'tldr --color always $word'
+
+    # switch group using `<` and `>`
+    zstyle ':fzf-tab:*' switch-group '<' '>'
+
+    # For postponing loading `fzf`
+    zinit ice lucid wait
+    zinit snippet OMZP::fzf
 fi
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -68,13 +99,14 @@ if [[ $(command -v asdf) == $HOME/.local/bin/asdf ]]; then
 fi
 
 # souce .zsh/*.zsh files
-[[ ! -f $ZDOTDIR/plugins.zsh ]] || source $ZDOTDIR/plugins.zsh
 [[ ! -f $ZDOTDIR/keybindings.zsh ]] || source $ZDOTDIR/keybindings.zsh
 
 # compinit
 autoload -U compinit
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
 compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+
+[[ ! -x "$(command -v zoxide)" ]] || eval "$(zoxide init --cmd cd zsh)"
 
 $SCRIPTS_HOME/install_chezmoi.sh
 [[ -x $BIN_HOME/chezmoi ]] && eval "$(chezmoi completion zsh)"
