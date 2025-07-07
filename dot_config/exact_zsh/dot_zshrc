@@ -42,6 +42,12 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl
 zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c 4 $word'
 zstyle ':fzf-tab:complete:tldr:*' fzf-preview 'tldr --color always $word'
 
+# configure eza
+zstyle ':omz:plugins:eza' 'icons' yes
+zstyle ':omz:plugins:eza' 'dirs-first' yes
+zstyle ':omz:plugins:eza' 'git-status' yes
+zstyle ':omz:plugins:eza' 'size-prefix' binary
+
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
