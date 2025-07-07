@@ -3,7 +3,10 @@
 {
 	"name": "Dotfiles",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:alpine-3.21",
+	"build": {
+		// Path is relative to the devcontainer.json file.
+		"dockerfile": "Dockerfile"
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"installOhMyZsh": false,
@@ -22,23 +25,26 @@
 			],
 			"settings": {
 				"dotfiles.repository": "elvisdiniz/dotfiles",
-				"go.toolsManagement.autoUpdate": true
+				"shellformat.path": "/bin/shfmt",
+				"files.associations": {
+					"dot_zshrc": "shellscript"
+				},
+				"[shellscript]": {
+					"shellcheck.exclude": [
+						"SC2296"
+					]
+				}
 			}
 		}
 	}
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "uname -a",
-
 	// Configure tool-specific properties.
 	// "customizations": {},
-
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }
