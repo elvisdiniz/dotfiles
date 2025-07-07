@@ -12,104 +12,99 @@ $HOME/.local/scripts/create_bin_symlinks.sh
 
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/init.sh"
 
-# history setup
-HISTFILE="${ZSH_STATE_HOME}/history"
-SAVEHIST=50000
-HISTSIZE=50000
-setopt share_history 
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_verify
-
 # install, if not installed yet, and source zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+export FZF_TMUX_OPTS="--height 40% --tmux bottom,40% --layout reverse --border top"
 
-# load/install zinit plugins
-# install fzf related plugins only if fzf is available
-if [ -x "$(command -v fzf)" ]; then
-    export FZF_DEFAULT_OPTS=" \
-    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-    --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-    export FZF_TMUX_OPTS="--height 40% --tmux bottom,40% --layout reverse --border top"
+# Configure fzf-tab
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview command for fzf-tab
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
+export LESSOPEN="|~/.local/scripts/lessfilter.sh %s"
 
-    zinit light Aloxaf/fzf-tab
-    zinit light Freed-Wu/fzf-tab-source
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c 4 $word'
+zstyle ':fzf-tab:complete:tldr:*' fzf-preview 'tldr --color always $word'
 
-    # Configure fzf-tab
-    # disable sort when completing `git checkout`
-    zstyle ':completion:*:git-checkout:*' sort false
-    # set descriptions format to enable group support
-    # NOTE: don't use escape sequences here, fzf-tab will ignore them
-    zstyle ':completion:*:descriptions' format '[%d]'
-    # set list-colors to enable filename colorizing
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-    # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-    zstyle ':completion:*' menu no
-    # preview command for fzf-tab
-    zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
-    export LESSOPEN="|~/.local/scripts/lessfilter.sh %s"
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
-    zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
-    zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c 4 $word'
-    zstyle ':fzf-tab:complete:tldr:*' fzf-preview 'tldr --color always $word'
+# load oh-my-zsh plugins
+zinit ice has'fzf'
+zinit light Aloxaf/fzf-tab
 
-    # switch group using `<` and `>`
-    zstyle ':fzf-tab:*' switch-group '<' '>'
+zinit ice has'fzf'
+zinit light Freed-Wu/fzf-tab-source
+# For postponing loading `fzf`
+zinit ice \
+        has'fzf' \
+        lucid \
+        wait
+zinit snippet OMZP::fzf
 
-    # For postponing loading `fzf`
-    zinit ice lucid wait
-    zinit snippet OMZP::fzf
-fi
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # don't load zsh-vi-mode plugin if zsh don't have pcre module on freebsd
-if [ $(uname -s) != "FreeBSD" ] || [ "$options[re_match_pcre]" = "on" ]; then
-    zinit ice depth=1
-    zinit light jeffreytse/zsh-vi-mode
-    ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
-else
-    # fallback to zsh built in vi mode and enable OMZ vi-mode plugin
-    VI_MODE_SET_CURSOR=true
-    VI_MODE_CURSOR_INSERT=5
-    bindkey '^f' autosuggest-accept
-    zinit snippet OMZP::vi-mode/vi-mode.plugin.zsh
-fi
+zinit ice if'[ $(uname -s) != "FreeBSD" ] || [ "$options[re_match_pcre]" = "on" ]'
+zinit light jeffreytse/zsh-vi-mode
+ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 
-# load/install Oh My Zsh plugins
-zinit snippet OMZP::sudo/sudo.plugin.zsh
+# fallback to zsh built in vi mode and enable OMZ vi-mode plugin
+# bindkey '^f' autosuggest-accept
+zinit ice if'[ $(uname -s) = "FreeBSD" ] && [ "$options[re_match_pcre]" != "on" ]'
+zinit snippet OMZP::vi-mode
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_INSERT=5
 
-if [ -d /home/linuxbrew/.linuxbrew/share/zsh/site-functions ]; then
-    zinit add-fpath /home/linuxbrew/.linuxbrew/share/zsh/site-functions/
-fi
+zinit ice has'sudo'
+zinit snippet OMZP::sudo
 
-if [[ $(command -v asdf) == $HOME/.local/bin/asdf ]]; then
-    if [ ! -f "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf" ]; then
-        mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
-        asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
-    fi
-    zinit add-fpath ${ASDF_DATA_DIR:-$HOME/.asdf}/completions
-fi
+zinit snippet OMZP::brew
+zinit snippet OMZP::asdf
+zinit snippet OMZP::chezmoi
+zinit snippet OMZP::extract
 
-# souce .zsh/*.zsh files
-[[ ! -f $ZDOTDIR/keybindings.zsh ]] || source $ZDOTDIR/keybindings.zsh
+zinit ice has'eza'
+zinit snippet OMZP::eza
+
+ZOXIDE_CMD_OVERRIDE=cd
+zinit ice has'zoxide'
+zinit snippet OMZP::zoxide
+
+zinit ice has'composer'
+zinit snippet OMZP::composer
+
+
+# load oh-my-zsh libs
+HISTFILE="${ZSH_STATE_HOME}/history"
+HISTSIZE=100000
+SAVEHIST=100000
+zinit snippet OMZL::history.zsh
+
+zinit snippet OMZL::key-bindings.zsh
+zinit snippet OMZL::completion.zsh
 
 # compinit
 autoload -U compinit
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
 compinit -d "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-
-[[ ! -x "$(command -v zoxide)" ]] || eval "$(zoxide init --cmd cd zsh)"
-
-$SCRIPTS_HOME/install_chezmoi.sh
-[[ -x $BIN_HOME/chezmoi ]] && eval "$(chezmoi completion zsh)"
 
 $SCRIPTS_HOME/install_starship.sh
 [[ -x $BIN_HOME/starship ]] && eval "$(starship completions zsh)"
