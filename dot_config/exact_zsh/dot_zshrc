@@ -109,6 +109,8 @@ zinit snippet OMZL::history.zsh
 zinit snippet OMZL::key-bindings.zsh
 zinit snippet OMZL::completion.zsh
 
+zinit add-fpath "$ZSH_CACHE_DIR/completions"
+
 # compinit
 autoload -U compinit
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
