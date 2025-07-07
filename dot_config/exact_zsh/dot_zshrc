@@ -1,9 +1,9 @@
 # make sure the re_match_pcre option is enabled in FreeBSD systems
 # the precompiled version of zsh does not use pcre, needs to build and compile with the module:
-# 
+#
 # how to build a a package from ports: https://www.cyberciti.biz/faq/install-ports-in-freebsd/
 # zvm bug: https://github.com/jeffreytse/zsh-vi-mode/issues/159
-if [ "$options[re_match_pcre]" = "off" ] && [ -f /usr/local/lib/zsh/5.9/zsh/pcre.so ] && [ $(uname -s) = "FreeBSD" ] ; then
+if [ "$options[re_match_pcre]" = "off" ] && [ -f /usr/local/lib/zsh/5.9/zsh/pcre.so ] && [ $(uname -s) = "FreeBSD" ]; then
     setopt re_match_pcre
 fi
 ######################################################################################################################
@@ -68,9 +68,9 @@ zinit ice has'fzf'
 zinit light Freed-Wu/fzf-tab-source
 # For postponing loading `fzf`
 zinit ice \
-        has'fzf' \
-        lucid \
-        wait
+    has'fzf' \
+    lucid \
+    wait
 zinit snippet OMZP::fzf
 
 zinit light zsh-users/zsh-autosuggestions
@@ -107,7 +107,6 @@ zinit snippet OMZP::zoxide
 
 zinit ice has'composer'
 zinit snippet OMZP::composer
-
 
 zinit add-fpath "$ZSH_CACHE_DIR/completions"
 
