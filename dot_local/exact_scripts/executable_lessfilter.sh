@@ -164,6 +164,8 @@ elif [ "$category" = text ]; then
 	fi
 elif has_cmd lesspipe.sh; then
 	lesspipe.sh "$1"
+elif has_cmd "$HOME/.local/share/lesspipe/lesspipe.sh"; then
+	$HOME/.local/share/lesspipe/lesspipe.sh "$1"
 else
 	exit 1
 fi

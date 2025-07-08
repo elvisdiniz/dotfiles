@@ -10,3 +10,8 @@
     exact = false
     stripComponents = 1
     refreshPeriod = "168h"
+[".local/share/lesspipe/lesspipe.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/wofr06/lesspipe/master/lesspipe.sh"
+    executable = true
+    refreshPeriod = "168h"
