@@ -155,8 +155,5 @@ if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 
-$SCRIPTS_HOME/install_chezmoi.sh
-[ -x $BIN_HOME/chezmoi ] && eval "$(chezmoi completion bash)"
-
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'

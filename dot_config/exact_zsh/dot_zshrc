@@ -93,9 +93,6 @@ zinit snippet OMZP::sudo
 zinit snippet OMZP::brew
 zinit snippet OMZP::asdf
 
-zinit ice if'[ -x "$BIN_HOME/chezmoi" ]'
-zinit snippet OMZP::chezmoi
-
 zinit ice if'[[ -f /etc/os-release && "$(grep -i "^ID=" /etc/os-release)" == "ID=arch" ]]'
 zinit snippet OMZP::archlinux
 
