@@ -6,9 +6,9 @@ esac
 
 $HOME/.local/scripts/create_bin_symlinks.sh
 
-$SCRIPTS_HOME/install_starship.sh
-
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/init.sh"
+
+$SCRIPTS_HOME/install_starship.sh
 
 # Path to your oh-my-bash installation.
 export OSH="${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-bash"
