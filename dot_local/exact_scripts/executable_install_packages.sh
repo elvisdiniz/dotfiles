@@ -39,6 +39,64 @@ install_package_asdf() {
     cd -
 }
 
+# Function to install the latest version of chezmoi from GitHub releases
+install_chezmoi() {
+    info "Installing the latest version of chezmoi..."
+    if ! command_exists jq; then
+        info "jq is not installed. Installing it now..."
+        case "$ID" in
+        "debian" | "ubuntu")
+            run_as_root apt-get install -y jq
+            ;;
+        "fedora")
+            run_as_root dnf install -y jq
+            ;;
+        *)
+            error "Unsupported Linux distribution for jq installation: $ID"
+            exit 1
+            ;;
+        esac
+    fi
+
+    local latest_version=$(curl -s "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+    local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+    local download_url=""
+    local file_ext=""
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        file_ext="deb"
+        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/chezmoi_${latest_version}_linux_${machine}.${file_ext}"
+        ;;
+    "fedora")
+        file_ext="rpm"
+        local arch=$(uname -m)
+        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/chezmoi-${latest_version}-${arch}.rpm"
+        ;;
+    *)
+        error "Unsupported Linux distribution for chezmoi installation: $ID"
+        exit 1
+        ;;
+    esac
+
+    local temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+    info "Downloading chezmoi from ${download_url}"
+    wget "$download_url" -O "chezmoi.${file_ext}"
+    
+    case "$ID" in
+    "debian" | "ubuntu")
+        run_as_root dpkg -i "chezmoi.${file_ext}"
+        ;;
+    "fedora")
+        run_as_root rpm -i "chezmoi.${file_ext}"
+        ;;
+    esac
+    
+    cd -
+    rm -rf "$temp_dir"
+}
+
 # Function to install packages on Arch Linux
 install_arch() {
     info "Installing packages for Arch Linux..."
@@ -72,6 +130,7 @@ install_debian_ubuntu() {
             curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
         fi
     fi
+    install_chezmoi
 }
 
 # Function to install packages on Alpine Linux
@@ -89,6 +148,7 @@ install_fedora() {
         packages="$packages eza"
     fi
     run_as_root dnf install -y $packages
+    install_chezmoi
 }
 
 # Function to install packages on FreeBSD
