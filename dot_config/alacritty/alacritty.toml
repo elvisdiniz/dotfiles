@@ -7,7 +7,7 @@ normal.family = "JetBrainsMono Nerd Font"
 
 [terminal.shell]
 program = "zellij"
-args = ["attach", "-c"]
+args = ["-l", "welcome"]
 
 [window]
 startup_mode = "Maximized"
