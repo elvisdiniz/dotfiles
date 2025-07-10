@@ -55,8 +55,7 @@ add_eza_apt_repository() {
     info "Added eza repository and updated package list."
 }
 
-# Function to install the latest version of chezmoi from GitHub releases
-install_chezmoi() {
+install_jq() {
     if ! command_exists jq; then
         info "jq is not installed. Installing it now..."
         case "$ID" in
@@ -72,6 +71,11 @@ install_chezmoi() {
             ;;
         esac
     fi
+}
+
+# Function to install the latest version of chezmoi from GitHub releases
+install_chezmoi() {
+    install_jq
 
     info "Checking for the latest version of chezmoi..."
     local latest_version=$(curl -s "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq -r '.tag_name' | sed 's/v//')
@@ -128,18 +132,7 @@ install_chezmoi() {
 
 # Function to install the latest version of fastfetch from GitHub releases
 install_fastfetch() {
-    if ! command_exists jq; then
-        info "jq is not installed. Installing it now..."
-        case "$ID" in
-        "debian" | "ubuntu")
-            run_as_root apt-get install -y jq
-            ;;
-        *)
-            error "Unsupported Linux distribution for jq installation: $ID"
-            exit 1
-            ;;
-        esac
-    fi
+    install_jq
 
     info "Checking for the latest version of fastfetch..."
     local latest_version=$(curl -s "https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest" | jq -r '.tag_name')
@@ -188,18 +181,7 @@ install_fastfetch() {
 
 # Function to install the latest version of zoxide from GitHub releases
 install_zoxide() {
-    if ! command_exists jq; then
-        info "jq is not installed. Installing it now..."
-        case "$ID" in
-        "debian" | "ubuntu")
-            run_as_root apt-get install -y jq
-            ;;
-        *)
-            error "Unsupported Linux distribution for jq installation: $ID"
-            exit 1
-            ;;
-        esac
-    fi
+    install_jq
 
     info "Checking for the latest version of zoxide..."
     local latest_version=$(curl -s "https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest" | jq -r '.tag_name' | sed 's/v//')
@@ -246,8 +228,56 @@ install_zoxide() {
     rm -rf "$temp_dir"
 }
 
+install_bottom() {
+    install_jq
+
+    info "Checking for the latest version of bottom..."
+    local latest_version=$(curl -s "https://api.github.com/repos/ClementTsang/bottom/releases/latest" | jq -r '.tag_name')
+
+    if command_exists btm; then
+        local current_version=$(btm --version | cut -d ' ' -f 2)
+        if [ "$current_version" = "$latest_version" ]; then
+            info "bottom is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of bottom is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of bottom..."
+
+    local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+    local download_url=""
+    local file_ext=""
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        file_ext="deb"
+        download_url="https://github.com/ClementTsang/bottom/releases/download/${latest_version}/bottom_${latest_version}-1_${machine}.${file_ext}"
+        ;;
+    *)
+        error "Unsupported Linux distribution for bottom installation: $ID"
+        exit 1
+        ;;
+    esac
+
+    local temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+    info "Downloading bottom from ${download_url}"
+    wget "$download_url" -O "bottom.${file_ext}"
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        run_as_root dpkg -i "bottom.${file_ext}"
+        ;;
+    esac
+
+    cd -
+    rm -rf "$temp_dir"
+}
+
 # Function to install packages on Arch Linux
-install_arch() {
+setup_arch() {
     info "Installing packages for Arch Linux..."
     run_as_root pacman -Syu --noconfirm
     run_as_root pacman -S --noconfirm --needed \
@@ -255,7 +285,7 @@ install_arch() {
 }
 
 # Function to install packages on Debian/Ubuntu
-install_debian_ubuntu() {
+setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     add_eza_apt_repository
     run_as_root apt-get update
@@ -266,6 +296,7 @@ install_debian_ubuntu() {
         else
             install_zoxide
             install_fastfetch
+            install_bottom
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
@@ -281,14 +312,14 @@ install_debian_ubuntu() {
 }
 
 # Function to install packages on Alpine Linux
-install_alpine() {
+setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
     run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Function to install packages on Fedora
-install_fedora() {
+setup_fedora() {
     info "Installing packages for Fedora..."
     local packages="bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux"
     if [ "$VERSION_ID" -lt 42 ]; then
@@ -299,14 +330,14 @@ install_fedora() {
 }
 
 # Function to install packages on FreeBSD
-install_freebsd() {
+setup_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
     run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Function to install packages on macOS
-install_macos() {
+setup_macos() {
     info "Installing packages for macOS..."
     if ! command_exists brew; then
         error "Homebrew is not installed. Please install it first."
@@ -341,16 +372,16 @@ main() {
 
         case "$ID" in
         "arch")
-            install_arch
+            setup_arch
             ;;
         "debian" | "ubuntu")
-            install_debian_ubuntu
+            setup_debian_ubuntu
             ;;
         "alpine")
-            install_alpine
+            setup_alpine
             ;;
         "fedora")
-            install_fedora
+            setup_fedora
             ;;
         *)
             error "Unsupported Linux distribution: $ID"
@@ -359,10 +390,10 @@ main() {
         esac
         ;;
     "darwin")
-        install_macos
+        setup_macos
         ;;
     "freebsd")
-        install_freebsd
+        setup_freebsd
         ;;
     *)
         error "Unsupported operating system: $os"
