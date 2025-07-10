@@ -126,6 +126,66 @@ install_chezmoi() {
     rm -rf "$temp_dir"
 }
 
+# Function to install the latest version of fastfetch from GitHub releases
+install_fastfetch() {
+    if ! command_exists jq; then
+        info "jq is not installed. Installing it now..."
+        case "$ID" in
+        "debian" | "ubuntu")
+            run_as_root apt-get install -y jq
+            ;;
+        *)
+            error "Unsupported Linux distribution for jq installation: $ID"
+            exit 1
+            ;;
+        esac
+    fi
+
+    info "Checking for the latest version of fastfetch..."
+    local latest_version=$(curl -s "https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest" | jq -r '.tag_name')
+
+    if command_exists fastfetch; then
+        local current_version=$(fastfetch --version | cut -d ' ' -f 2 | cut -d '-' -f 1)
+        if [ "$current_version" = "$latest_version" ]; then
+            info "fastfetch is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of fastfetch is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of fastfetch..."
+
+    local machine=$(uname -m | sed 's/x86_64/amd64/;s/arm64/aarch64/')
+    local download_url=""
+    local file_ext=""
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        file_ext="deb"
+        download_url="https://github.com/fastfetch-cli/fastfetch/releases/download/${latest_version}/fastfetch-linux-${machine}.${file_ext}"
+        ;;
+    *)
+        error "Unsupported Linux distribution for fastfetch installation: $ID"
+        exit 1
+        ;;
+    esac
+
+    local temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+    info "Downloading fastfetch from ${download_url}"
+    wget "$download_url" -O "fastfetch.${file_ext}"
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        run_as_root dpkg -i "fastfetch.${file_ext}"
+        ;;
+    esac
+
+    cd -
+    rm -rf "$temp_dir"
+}
+
 # Function to install the latest version of zoxide from GitHub releases
 install_zoxide() {
     if ! command_exists jq; then
@@ -205,12 +265,15 @@ install_debian_ubuntu() {
             packages="$packages fastfetch btm zoxide starship"
         else
             install_zoxide
+            install_fastfetch
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
         packages="$packages zoxide btm"
         if [ "$(echo "$VERSION_ID" | cut -d. -f1)" -ge 25 ]; then
             packages="$packages starship fastfetch"
+        else
+            install_fastfetch
         fi
     fi
     run_as_root apt-get install -y $packages
