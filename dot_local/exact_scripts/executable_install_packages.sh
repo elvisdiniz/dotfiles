@@ -203,6 +203,16 @@ main() {
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
     machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
 
+    if ! command_exists wget; then
+        error "wget is not installed. Please install it first."
+        exit 1
+    fi
+
+    if ! command_exists curl; then
+        error "curl is not installed. Please install it first."
+        exit 1
+    fi
+
     case "$os" in
     "linux")
         if [ -f /etc/os-release ]; then
