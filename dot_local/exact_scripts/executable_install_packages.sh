@@ -27,18 +27,6 @@ run_as_root() {
     fi
 }
 
-install_package_asdf() {
-    version="$1"
-    os="$2"
-    platform="$3"
-    cd "$(mktemp -d)"
-    wget https://github.com/asdf-vm/asdf/releases/download/v$version/asdf-v$version-$os-$platform.tar.gz &&
-        mkdir -p $HOME/.local/bin &&
-        tar -xzf asdf-v$version-$os-$platform.tar.gz -C $HOME/.local/bin &&
-        rm asdf-v$version-$os-$platform.tar.gz
-    cd -
-}
-
 # Function to install the latest version of chezmoi from GitHub releases
 install_chezmoi() {
     info "Installing the latest version of chezmoi..."
@@ -242,11 +230,9 @@ main() {
             exit 1
             ;;
         esac
-        install_package_asdf "0.18.0" "$os" "$machine"
         ;;
     "darwin")
         install_macos
-        install_package_asdf "0.18.0" "$os" "$machine"
         ;;
     "freebsd")
         install_freebsd
