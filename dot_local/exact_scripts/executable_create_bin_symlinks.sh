@@ -10,5 +10,9 @@
 [ ! -x "$(command -v exa)" ] && [ -L $HOME/.local/bin/eza ] && rm $HOME/.local/bin/eza
 
 if [ -x "/usr/bin/chezmoi" ] || [ -x "/usr/local/bin/chezmoi" ] || [ -x "/home/linuxbrew/.linuxbrew/bin/chezmoi" ]; then
-    [ -x "$BIN_HOME/chezmoi" ] && rm "$BIN_HOME/chezmoi"
+    [ -x "$HOME/.local/bin/chezmoi" ] && rm "$HOME/.local/bin/chezmoi"
+fi
+
+if [ -x "/usr/bin/zoxide" ] || [ -x "/usr/local/bin/zoxide" ] || [ -x "/home/linuxbrew/.linuxbrew/bin/zoxide" ]; then
+    [ -x "$HOME/.local/bin/zoxide" ] && rm "$HOME/.local/bin/zoxide"
 fi
