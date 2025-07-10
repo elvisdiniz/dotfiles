@@ -57,7 +57,6 @@ add_eza_apt_repository() {
 
 # Function to install the latest version of chezmoi from GitHub releases
 install_chezmoi() {
-    info "Installing the latest version of chezmoi..."
     if ! command_exists jq; then
         info "jq is not installed. Installing it now..."
         case "$ID" in
@@ -74,7 +73,21 @@ install_chezmoi() {
         esac
     fi
 
+    info "Checking for the latest version of chezmoi..."
     local latest_version=$(curl -s "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+
+    if command_exists chezmoi; then
+        local current_version=$(chezmoi --version | cut -d ' ' -f 3 | sed 's/v//;s/,//')
+        if [ "$current_version" = "$latest_version" ]; then
+            info "chezmoi is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of chezmoi is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of chezmoi..."
+
     local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
@@ -115,7 +128,6 @@ install_chezmoi() {
 
 # Function to install the latest version of zoxide from GitHub releases
 install_zoxide() {
-    info "Installing the latest version of zoxide..."
     if ! command_exists jq; then
         info "jq is not installed. Installing it now..."
         case "$ID" in
@@ -129,7 +141,21 @@ install_zoxide() {
         esac
     fi
 
+    info "Checking for the latest version of zoxide..."
     local latest_version=$(curl -s "https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+
+    if command_exists zoxide; then
+        local current_version=$(zoxide --version | cut -d ' ' -f 2)
+        if [ "$current_version" = "$latest_version" ]; then
+            info "zoxide is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of zoxide is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of zoxide..."
+
     local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
