@@ -137,14 +137,14 @@ install_arch() {
     info "Installing packages for Arch Linux..."
     run_as_root pacman -Syu --noconfirm
     run_as_root pacman -S --noconfirm --needed \
-        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Function to install packages on Debian/Ubuntu
 install_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="bat curl wget git vim fzf fd-find ripgrep neovim fish zsh"
+    local packages="bat curl wget git vim fzf fd-find ripgrep neovim fish zsh tmux"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages eza fastfetch btm"
@@ -167,13 +167,13 @@ install_debian_ubuntu() {
 install_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Function to install packages on Fedora
 install_fedora() {
     info "Installing packages for Fedora..."
-    local packages="bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh"
+    local packages="bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux"
     if [ "$VERSION_ID" -lt 42 ]; then
         packages="$packages eza"
     fi
@@ -185,7 +185,7 @@ install_fedora() {
 install_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
-    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Function to install packages on macOS
@@ -195,7 +195,7 @@ install_macos() {
         error "Homebrew is not installed. Please install it first."
         exit 1
     fi
-    brew install chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh
+    brew install chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
 # Main installation logic
