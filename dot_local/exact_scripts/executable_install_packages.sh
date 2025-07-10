@@ -27,6 +27,34 @@ run_as_root() {
     fi
 }
 
+add_eza_apt_repository() {
+    if ! command_exists gpg; then
+        info "gpg is not installed. Installing it now..."
+        case "$ID" in
+        "debian" | "ubuntu")
+            run_as_root apt-get install -y gpg
+            ;;
+        *)
+            error "Unsupported Linux distribution for gpg installation: $ID"
+            exit 1
+            ;;
+        esac
+    fi
+
+    run_as_root mkdir -p /etc/apt/keyrings
+    if [ ! -f /etc/apt/keyrings/gierens.gpg ]; then
+        info "Downloading gierens.gpg keyring..."
+        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | run_as_root gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    fi
+    if [ ! -f /etc/apt/sources.list.d/gierens.list ]; then
+        info "Creating eza repository list file..."
+        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | run_as_root tee /etc/apt/sources.list.d/gierens.list
+    fi
+    run_as_root chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+    run_as_root apt update
+    info "Added eza repository and updated package list."
+}
+
 # Function to install the latest version of chezmoi from GitHub releases
 install_chezmoi() {
     info "Installing the latest version of chezmoi..."
@@ -143,20 +171,20 @@ install_arch() {
 # Function to install packages on Debian/Ubuntu
 install_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
+    add_eza_apt_repository
     run_as_root apt-get update
-    local packages="bat curl wget git vim fzf fd-find ripgrep neovim fish zsh tmux"
+    local packages="bat curl eza wget git vim fzf fd-find ripgrep neovim fish zsh tmux"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
-            packages="$packages eza fastfetch btm"
+            packages="$packages fastfetch btm zoxide starship"
         else
-            packages="$packages exa"
             install_zoxide
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
-        packages="$packages eza zoxide"
+        packages="$packages zoxide btm"
         if [ "$(echo "$VERSION_ID" | cut -d. -f1)" -ge 25 ]; then
-            packages="$packages starship"
+            packages="$packages starship fastfetch"
         fi
     fi
     run_as_root apt-get install -y $packages
