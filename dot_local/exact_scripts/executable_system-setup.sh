@@ -281,7 +281,7 @@ setup_arch() {
     info "Installing packages for Arch Linux..."
     run_as_root pacman -Syu --noconfirm
     run_as_root pacman -S --noconfirm --needed \
-        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
+        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Debian/Ubuntu
@@ -315,7 +315,7 @@ setup_debian_ubuntu() {
 setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
+    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Fedora
@@ -333,7 +333,7 @@ setup_fedora() {
 setup_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
-    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
+    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on macOS
@@ -346,9 +346,122 @@ setup_macos() {
     brew install chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux
 }
 
+# Function to set up a new user
+setup_user() {
+    local username=$1
+    local os_type=$2
+    local linux_distro_id=$3
+
+    info "Setting up user: $username"
+
+    if [ "$os_type" = "darwin" ]; then
+        error "User setup is not supported on macOS."
+        return
+    fi
+
+    local admin_group=""
+
+    # Determine admin group and commands based on OS
+    case "$os_type" in
+    "linux")
+        admin_group="sudo"
+        if [ "$linux_distro_id" = "alpine" ]; then
+            admin_group="wheel"
+        fi
+
+        # Create admin group if it doesn't exist
+        if ! getent group "$admin_group" >/dev/null; then
+            info "Creating group '$admin_group'..."
+            if [ "$linux_distro_id" = "alpine" ]; then
+                run_as_root addgroup "$admin_group"
+            else
+                run_as_root groupadd "$admin_group"
+            fi
+        fi
+
+        # Create user if it doesn't exist
+        if ! id "$username" >/dev/null 2>&1; then
+            info "Creating user '$username'..."
+            if [ "$linux_distro_id" = "alpine" ]; then
+                # -D: no password, -s: shell
+                run_as_root adduser -D -s $(which zsh) "$username"
+            else
+                # -m: create home, -s: shell
+                run_as_root useradd -m -s $(which zsh) "$username"
+            fi
+            info "User '$username' created."
+        else
+            info "User '$username' already exists."
+        fi
+
+        # Add user to admin group
+        info "Adding user '$username' to group '$admin_group'..."
+        if [ "$linux_distro_id" = "alpine" ]; then
+            run_as_root addgroup "$username" "$admin_group"
+        else
+            run_as_root usermod -aG "$admin_group" "$username"
+        fi
+        ;;
+    "freebsd")
+        admin_group="wheel" # 'wheel' is the convention on FreeBSD
+
+        # Ensure wheel group exists
+        if ! pw group show "$admin_group" >/dev/null 2>&1; then
+            info "Creating group '$admin_group'..."
+            run_as_root pw groupadd "$admin_group"
+        fi
+
+        # Create user if it doesn't exist
+        if ! id "$username" >/dev/null 2>&1; then
+            info "Creating user '$username'..."
+            # -m: create home, -s: shell
+            run_as_root pw useradd "$username" -s $(which zsh) -m
+            info "User '$username' created."
+        else
+            info "User '$username' already exists."
+        fi
+
+        # Add user to wheel group
+        info "Adding user '$username' to group '$admin_group'..."
+        run_as_root pw usermod "$username" -G "$admin_group"
+        ;;
+    *)
+        error "User setup is not supported on this operating system: $os_type"
+        return
+        ;;
+    esac
+
+    # Set password for the user
+    info "Please set a password for $username:"
+    run_as_root passwd "$username"
+
+    info "User $username setup complete."
+}
+
 # Main installation logic
 main() {
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    local linux_distro_id=""
+    if [ "$os" = "linux" ]; then
+        if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            linux_distro_id=$ID
+        else
+            error "Cannot determine Linux distribution because /etc/os-release is not present."
+            exit 1
+        fi
+    fi
+
+    local username=""
+    if [ "${1:-}" = "-u" ] || [ "${1:-}" = "--user" ]; then
+        if [ -z "${2:-}" ]; then
+            error "Argument for $1 is missing"
+            exit 1
+        fi
+        username="$2"
+        shift 2
+    fi
+
     machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
 
     if ! command_exists wget; then
@@ -363,13 +476,6 @@ main() {
 
     case "$os" in
     "linux")
-        if [ -f /etc/os-release ]; then
-            . /etc/os-release
-        else
-            error "Cannot determine Linux distribution because /etc/os-release is not present."
-            exit 1
-        fi
-
         case "$ID" in
         "arch")
             setup_arch
@@ -401,6 +507,10 @@ main() {
         ;;
     esac
     info "Package installation complete."
+
+    if [ -n "$username" ]; then
+        setup_user "$username" "$os" "$linux_distro_id"
+    fi
 }
 
-main
+main "$@"
