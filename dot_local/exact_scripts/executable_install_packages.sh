@@ -32,10 +32,10 @@ install_package_asdf() {
     os="$2"
     platform="$3"
     cd "$(mktemp -d)"
-    wget https://github.com/asdf-vm/asdf/releases/download/v$version/asdf-v$version-$os-$platform.tar.gz && \
-    mkdir -p $HOME/.local/bin && \
-    tar -xzf asdf-v$version-$os-$platform.tar.gz -C $HOME/.local/bin && \
-    rm asdf-v$version-$os-$platform.tar.gz
+    wget https://github.com/asdf-vm/asdf/releases/download/v$version/asdf-v$version-$os-$platform.tar.gz &&
+        mkdir -p $HOME/.local/bin &&
+        tar -xzf asdf-v$version-$os-$platform.tar.gz -C $HOME/.local/bin &&
+        rm asdf-v$version-$os-$platform.tar.gz
     cd -
 }
 
@@ -83,7 +83,7 @@ install_chezmoi() {
     cd "$temp_dir"
     info "Downloading chezmoi from ${download_url}"
     wget "$download_url" -O "chezmoi.${file_ext}"
-    
+
     case "$ID" in
     "debian" | "ubuntu")
         run_as_root dpkg -i "chezmoi.${file_ext}"
@@ -92,7 +92,54 @@ install_chezmoi() {
         run_as_root rpm -i "chezmoi.${file_ext}"
         ;;
     esac
-    
+
+    cd -
+    rm -rf "$temp_dir"
+}
+
+# Function to install the latest version of zoxide from GitHub releases
+install_zoxide() {
+    info "Installing the latest version of zoxide..."
+    if ! command_exists jq; then
+        info "jq is not installed. Installing it now..."
+        case "$ID" in
+        "debian" | "ubuntu")
+            run_as_root apt-get install -y jq
+            ;;
+        *)
+            error "Unsupported Linux distribution for jq installation: $ID"
+            exit 1
+            ;;
+        esac
+    fi
+
+    local latest_version=$(curl -s "https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+    local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+    local download_url=""
+    local file_ext=""
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        file_ext="deb"
+        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide_${latest_version}-1_${machine}.${file_ext}"
+        ;;
+    *)
+        error "Unsupported Linux distribution for zoxide installation: $ID"
+        exit 1
+        ;;
+    esac
+
+    local temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+    info "Downloading zoxide from ${download_url}"
+    wget "$download_url" -O "zoxide.${file_ext}"
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        run_as_root dpkg -i "zoxide.${file_ext}"
+        ;;
+    esac
+
     cd -
     rm -rf "$temp_dir"
 }
@@ -115,21 +162,16 @@ install_debian_ubuntu() {
             packages="$packages eza fastfetch btm"
         else
             packages="$packages exa"
+            install_zoxide
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
-        packages="$packages eza"
+        packages="$packages eza zoxide"
         if [ "$(echo "$VERSION_ID" | cut -d. -f1)" -ge 25 ]; then
-            packages="$packages starship zoxide"
+            packages="$packages starship"
         fi
     fi
     run_as_root apt-get install -y $packages
-    if [ "$(echo "$VERSION_ID" | cut -d. -f1)" -lt 25 ]; then
-        if ! command_exists zoxide; then
-            info "Installing zoxide..."
-            curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-        fi
-    fi
     install_chezmoi
 }
 
