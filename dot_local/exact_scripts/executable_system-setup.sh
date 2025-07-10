@@ -44,7 +44,7 @@ add_eza_apt_repository() {
     run_as_root mkdir -p /etc/apt/keyrings
     if [ ! -f /etc/apt/keyrings/gierens.gpg ]; then
         info "Downloading gierens.gpg keyring..."
-        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | run_as_root gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+        curl -sL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | run_as_root gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
     fi
     if [ ! -f /etc/apt/sources.list.d/gierens.list ]; then
         info "Creating eza repository list file..."
@@ -115,7 +115,7 @@ install_chezmoi() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading chezmoi from ${download_url}"
-    wget "$download_url" -O "chezmoi.${file_ext}"
+    curl -L "$download_url" -o "chezmoi.${file_ext}"
 
     case "$ID" in
     "debian" | "ubuntu")
@@ -167,7 +167,7 @@ install_fastfetch() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading fastfetch from ${download_url}"
-    wget "$download_url" -O "fastfetch.${file_ext}"
+    curl -L "$download_url" -o "fastfetch.${file_ext}"
 
     case "$ID" in
     "debian" | "ubuntu")
@@ -216,7 +216,7 @@ install_zoxide() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading zoxide from ${download_url}"
-    wget "$download_url" -O "zoxide.${file_ext}"
+    curl -L "$download_url" -o "zoxide.${file_ext}"
 
     case "$ID" in
     "debian" | "ubuntu")
@@ -264,7 +264,7 @@ install_bottom() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading bottom from ${download_url}"
-    wget "$download_url" -O "bottom.${file_ext}"
+    curl -L "$download_url" -o "bottom.${file_ext}"
 
     case "$ID" in
     "debian" | "ubuntu")
