@@ -19,6 +19,14 @@ threshold = 0
 [git_metrics]
 disabled = false
 
+[status]
+disabled = false
+format = '[$symbol]($style) '
+map_symbol = true
+
+[directory]
+truncation_symbol = '.../'
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
