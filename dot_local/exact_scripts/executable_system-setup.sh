@@ -392,6 +392,16 @@ setup_fedora() {
     install_chezmoi
 }
 
+# Function to install packages on openSUSE
+setup_opensuse() {
+    info "Installing packages for openSUSE..."
+    local packages="chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
+    if [ "$ID" = "opensuse-tumbleweed" ]; then
+        packages="$packages zoxide"
+    fi
+    run_as_root zypper install -y --no-recommends $packages
+}
+
 # Function to install packages on FreeBSD
 setup_freebsd() {
     info "Installing packages for FreeBSD..."
@@ -575,6 +585,9 @@ main() {
             ;;
         "fedora")
             setup_fedora
+            ;;
+        "opensuse-tumbleweed" | "opensuse-leap")
+            setup_opensuse
             ;;
         *)
             error "Unsupported Linux distribution: $ID"
