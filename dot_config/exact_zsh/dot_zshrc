@@ -88,8 +88,12 @@ VI_MODE_SET_CURSOR=true
 VI_MODE_CURSOR_INSERT=5
 [ $(uname -s) = "FreeBSD" ] && [ "$options[re_match_pcre]" != "on" ] && bindkey '^f' autosuggest-accept
 
-zinit ice has'sudo'
+zinit ice has'thefuck'
+zinit snippet OMZP::thefuck
+
+zinit ice if'[ ! -x "$(command -v thefuck)" ] && [ -x "$(comman -v sudo)"]'
 zinit snippet OMZP::sudo
+
 zinit snippet OMZP::brew
 zinit snippet OMZP::asdf
 
