@@ -55,18 +55,22 @@ add_eza_apt_repository() {
     info "Added eza repository and updated package list."
 }
 
-install_jq() {
-    if ! command_exists jq; then
-        info "jq is not installed. Installing it now..."
+install_package() {
+    local package_name="$1"
+    if ! command_exists $package_name; then
+        info "$package_name is not installed. Installing it now..."
         case "$ID" in
         "debian" | "ubuntu")
-            run_as_root apt-get install -y jq
+            run_as_root apt-get install -y $package_name
             ;;
         "fedora")
-            run_as_root dnf install -y jq
+            run_as_root dnf install -y $package_name
+            ;;
+        "opensuse-tumbleweed" | "opensuse-leap")
+            run_as_root zypper install -y $package_name
             ;;
         *)
-            error "Unsupported Linux distribution for jq installation: $ID"
+            error "Unsupported Linux distribution for $package_name installation: $ID"
             exit 1
             ;;
         esac
@@ -75,7 +79,7 @@ install_jq() {
 
 # Function to install the latest version of chezmoi from GitHub releases
 install_chezmoi() {
-    install_jq
+    install_package jq
 
     info "Checking for the latest version of chezmoi..."
     local latest_version=$(curl -s "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq -r '.tag_name' | sed 's/v//')
@@ -132,7 +136,7 @@ install_chezmoi() {
 
 # Function to install the latest version of fastfetch from GitHub releases
 install_fastfetch() {
-    install_jq
+    install_package jq
 
     info "Checking for the latest version of fastfetch..."
     local latest_version=$(curl -s "https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest" | jq -r '.tag_name')
@@ -181,7 +185,9 @@ install_fastfetch() {
 
 # Function to install the latest version of zoxide from GitHub releases
 install_zoxide() {
-    install_jq
+    install_package jq
+    install_package tar
+    install_package gzip
 
     info "Checking for the latest version of zoxide..."
     local latest_version=$(curl -s "https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest" | jq -r '.tag_name' | sed 's/v//')
@@ -198,7 +204,8 @@ install_zoxide() {
 
     info "Installing the latest version of zoxide..."
 
-    local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+    local machine
+    machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
 
@@ -206,6 +213,12 @@ install_zoxide() {
     "debian" | "ubuntu")
         file_ext="deb"
         download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide_${latest_version}-1_${machine}.${file_ext}"
+        ;;
+    "opensuse-leap")
+        file_ext="tar.gz"
+        local arch
+        arch=$(uname -m)
+        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide-${latest_version}-${arch}-unknown-linux-musl.${file_ext}"
         ;;
     *)
         error "Unsupported Linux distribution for zoxide installation: $ID"
@@ -222,6 +235,23 @@ install_zoxide() {
     "debian" | "ubuntu")
         run_as_root dpkg -i "zoxide.${file_ext}"
         ;;
+    "opensuse-leap")
+        run_as_root mkdir -p /usr/local/bin
+        info "Extracting zoxide..."
+        run_as_root tar -xzf "zoxide.${file_ext}"
+        run_as_root mv zoxide /usr/local/bin/zoxide
+        run_as_root chmod +x /usr/local/bin/zoxide
+        run_as_root mkdir -p /usr/local/share/man/man1
+        run_as_root mv man/man1/zoxide*.1 /usr/local/share/man/man1/
+        run_as_root mkdir -p /usr/local/share/zsh/site-functions
+        run_as_root mv completions/_zoxide /usr/local/share/zsh/site-functions/_zoxide
+        run_as_root chmod 755 /usr/local/share/zsh/site-functions/_zoxide
+        run_as_root mkdir -p /usr/local/share/bash-completion/completions
+        run_as_root mv completions/zoxide.bash /usr/local/share/bash-completion/completions/zoxide.bash
+        run_as_root mkdir -p /usr/share/fish/vendor_completions.d
+        run_as_root mv completions/zoxide.fish /usr/share/fish/vendor_completions.d/zoxide.fish
+        info "zoxide installed successfully."
+        ;;
     esac
 
     cd -
@@ -229,7 +259,7 @@ install_zoxide() {
 }
 
 install_bottom() {
-    install_jq
+    install_package jq
 
     info "Checking for the latest version of bottom..."
     local latest_version=$(curl -s "https://api.github.com/repos/ClementTsang/bottom/releases/latest" | jq -r '.tag_name')
@@ -277,7 +307,7 @@ install_bottom() {
 }
 
 install_eza() {
-    install_jq
+    install_package jq
 
     info "Checking for the latest version of eza..."
     local latest_version=$(curl -s "https://api.github.com/repos/eza-community/eza/releases/latest" | jq -r '.tag_name' | sed 's/v//')
@@ -398,6 +428,9 @@ setup_opensuse() {
     local packages="chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
     if [ "$ID" = "opensuse-tumbleweed" ]; then
         packages="$packages zoxide"
+    fi
+    if [ "$ID" = "opensuse-leap" ]; then
+        install_zoxide
     fi
     run_as_root zypper install -y --no-recommends $packages
 }
