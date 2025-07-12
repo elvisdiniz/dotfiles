@@ -91,7 +91,7 @@ VI_MODE_CURSOR_INSERT=5
 zinit ice has'thefuck'
 zinit snippet OMZP::thefuck
 
-zinit ice if'[ ! -x "$(command -v thefuck)" ] && [ -x "$(comman -v sudo)"]'
+zinit ice if'[ ! -x "$(command -v thefuck)" ] && [ -x "$(command -v sudo)"]'
 zinit snippet OMZP::sudo
 
 zinit snippet OMZP::brew
