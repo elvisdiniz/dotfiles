@@ -237,15 +237,16 @@ install_zoxide() {
         ;;
     "opensuse-leap")
         run_as_root mkdir -p /usr/local/bin
+        run_as_root chown root:root /usr/local/bin
         info "Extracting zoxide..."
-        run_as_root tar -xzf "zoxide.${file_ext}"
+        tar -xzf "zoxide.${file_ext}"
+        run_as_root chown -R root:root "$temp_dir"
         run_as_root mv zoxide /usr/local/bin/zoxide
         run_as_root chmod +x /usr/local/bin/zoxide
         run_as_root mkdir -p /usr/local/share/man/man1
         run_as_root mv man/man1/zoxide*.1 /usr/local/share/man/man1/
         run_as_root mkdir -p /usr/local/share/zsh/site-functions
         run_as_root mv completions/_zoxide /usr/local/share/zsh/site-functions/_zoxide
-        run_as_root chmod 755 /usr/local/share/zsh/site-functions/_zoxide
         run_as_root mkdir -p /usr/local/share/bash-completion/completions
         run_as_root mv completions/zoxide.bash /usr/local/share/bash-completion/completions/zoxide.bash
         run_as_root mkdir -p /usr/share/fish/vendor_completions.d
