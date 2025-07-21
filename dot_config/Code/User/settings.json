@@ -11,7 +11,10 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "gutter",
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
@@ -66,5 +69,6 @@
       "installOhMyZsh": false,
       "installOhMyZshConfig": false
     }
-  }
+  },
+  "containers.containerClient": "com.microsoft.visualstudio.containers.podman"
 }
