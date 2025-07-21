@@ -15,7 +15,8 @@
 				"fallenwood.vimL",
 				"foxundermoon.shell-format",
 				"kdl-org.kdl",
-				"bmalehorn.vscode-fish"
+				"bmalehorn.vscode-fish",
+				"Koihik.vscode-lua-format"
 			],
 			"settings": {
 				"shellformat.path": "/usr/bin/shfmt"
