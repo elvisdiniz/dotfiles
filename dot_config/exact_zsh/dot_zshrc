@@ -112,6 +112,8 @@ zinit snippet OMZP::zoxide
 zinit ice has'composer'
 zinit snippet OMZP::composer
 
+zinit load atuinsh/atuin
+
 zinit add-fpath "$ZSH_CACHE_DIR/completions"
 
 # compinit
