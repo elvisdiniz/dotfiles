@@ -6,7 +6,6 @@
 .shell
 .tmux
 .vim
-.viminfo
 .vimrc
 .wget-hsts
 .zcompdump*
