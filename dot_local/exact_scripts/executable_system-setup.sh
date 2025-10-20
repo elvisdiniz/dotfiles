@@ -99,16 +99,19 @@ install_chezmoi() {
     local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
+    local package_name=""
 
     case "$ID" in
     "debian" | "ubuntu")
         file_ext="deb"
-        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/chezmoi_${latest_version}_linux_${machine}.${file_ext}"
+        package_name="chezmoi_${latest_version}_linux_${machine}.${file_ext}"
+        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/${package_name}"
         ;;
     "fedora")
         file_ext="rpm"
         local arch=$(uname -m)
-        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/chezmoi-${latest_version}-${arch}.rpm"
+        package_name="chezmoi-${latest_version}-${arch}.rpm"
+        download_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/${package_name}"
         ;;
     *)
         error "Unsupported Linux distribution for chezmoi installation: $ID"
@@ -119,14 +122,27 @@ install_chezmoi() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading chezmoi from ${download_url}"
-    curl -L "$download_url" -o "chezmoi.${file_ext}"
+    curl -L "$download_url" -o "${package_name}"
+
+    info "Verifying checksum..."
+    local checksum_url="https://github.com/twpayne/chezmoi/releases/download/v${latest_version}/chezmoi_${latest_version}_checksums.txt"
+    curl -L "$checksum_url" -o "checksums.txt"
+    local expected_checksum=$(grep "${package_name}" checksums.txt | cut -d ' ' -f 1)
+    local actual_checksum=$(sha256sum "${package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_checksum" != "$actual_checksum" ]; then
+        error "Checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Checksum verified."
 
     case "$ID" in
     "debian" | "ubuntu")
-        run_as_root dpkg -i "chezmoi.${file_ext}"
+        run_as_root dpkg -i "${package_name}"
         ;;
     "fedora")
-        run_as_root rpm -i "chezmoi.${file_ext}"
+        run_as_root rpm -i "${package_name}"
         ;;
     esac
 
@@ -156,11 +172,13 @@ install_fastfetch() {
     local machine=$(uname -m | sed 's/x86_64/amd64/;s/arm64/aarch64/')
     local download_url=""
     local file_ext=""
+    local package_name=""
 
     case "$ID" in
     "debian" | "ubuntu")
         file_ext="deb"
-        download_url="https://github.com/fastfetch-cli/fastfetch/releases/download/${latest_version}/fastfetch-linux-${machine}.${file_ext}"
+        package_name="fastfetch-linux-${machine}.${file_ext}"
+        download_url="https://github.com/fastfetch-cli/fastfetch/releases/download/${latest_version}/${package_name}"
         ;;
     *)
         error "Unsupported Linux distribution for fastfetch installation: $ID"
@@ -171,11 +189,24 @@ install_fastfetch() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading fastfetch from ${download_url}"
-    curl -L "$download_url" -o "fastfetch.${file_ext}"
+    curl -L "$download_url" -o "${package_name}"
+
+    info "Verifying checksum..."
+    local checksum_url="${download_url}.sha256"
+    curl -L "$checksum_url" -o "checksum.txt"
+    local expected_checksum=$(cat checksum.txt)
+    local actual_checksum=$(sha256sum "${package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_checksum" != "$actual_checksum" ]; then
+        error "Checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Checksum verified."
 
     case "$ID" in
     "debian" | "ubuntu")
-        run_as_root dpkg -i "fastfetch.${file_ext}"
+        run_as_root dpkg -i "${package_name}"
         ;;
     esac
 
@@ -208,17 +239,20 @@ install_zoxide() {
     machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
+    local package_name=""
 
     case "$ID" in
     "debian" | "ubuntu")
         file_ext="deb"
-        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide_${latest_version}-1_${machine}.${file_ext}"
+        package_name="zoxide_${latest_version}-1_${machine}.${file_ext}"
+        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/${package_name}"
         ;;
     "opensuse-leap")
         file_ext="tar.gz"
         local arch
         arch=$(uname -m)
-        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide-${latest_version}-${arch}-unknown-linux-musl.${file_ext}"
+        package_name="zoxide-${latest_version}-${arch}-unknown-linux-musl.${file_ext}"
+        download_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/${package_name}"
         ;;
     *)
         error "Unsupported Linux distribution for zoxide installation: $ID"
@@ -229,17 +263,40 @@ install_zoxide() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading zoxide from ${download_url}"
-    curl -L "$download_url" -o "zoxide.${file_ext}"
+    curl -L "$download_url" -o "${package_name}"
+
+    info "Verifying checksum..."
+    local checksum_url=""
+    case "$ID" in
+    "debian" | "ubuntu")
+        checksum_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide_${latest_version}-1_${machine}.deb.sha256sum"
+        ;;
+    "opensuse-leap")
+        local arch=$(uname -m)
+        checksum_url="https://github.com/ajeetdsouza/zoxide/releases/download/v${latest_version}/zoxide-${latest_version}-${arch}-unknown-linux-musl.tar.gz.sha256"
+        ;;
+    esac
+
+    curl -L "$checksum_url" -o "checksum.txt"
+    local expected_checksum=$(cat checksum.txt | cut -d ' ' -f 1)
+    local actual_checksum=$(sha256sum "${package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_checksum" != "$actual_checksum" ]; then
+        error "Checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Checksum verified."
 
     case "$ID" in
     "debian" | "ubuntu")
-        run_as_root dpkg -i "zoxide.${file_ext}"
+        run_as_root dpkg -i "${package_name}"
         ;;
     "opensuse-leap")
         run_as_root mkdir -p /usr/local/bin
         run_as_root chown root:root /usr/local/bin
         info "Extracting zoxide..."
-        tar -xzf "zoxide.${file_ext}"
+        tar -xzf "${package_name}"
         run_as_root chown -R root:root "$temp_dir"
         run_as_root mv zoxide /usr/local/bin/zoxide
         run_as_root chmod +x /usr/local/bin/zoxide
@@ -280,11 +337,13 @@ install_bottom() {
     local machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
     local download_url=""
     local file_ext=""
+    local package_name=""
 
     case "$ID" in
     "debian" | "ubuntu")
         file_ext="deb"
-        download_url="https://github.com/ClementTsang/bottom/releases/download/${latest_version}/bottom_${latest_version}-1_${machine}.${file_ext}"
+        package_name="bottom_${latest_version}-1_${machine}.${file_ext}"
+        download_url="https://github.com/ClementTsang/bottom/releases/download/${latest_version}/${package_name}"
         ;;
     *)
         error "Unsupported Linux distribution for bottom installation: $ID"
@@ -295,11 +354,24 @@ install_bottom() {
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading bottom from ${download_url}"
-    curl -L "$download_url" -o "bottom.${file_ext}"
+    curl -L "$download_url" -o "${package_name}"
+
+    info "Verifying checksum..."
+    local checksum_url="${download_url}.sha256"
+    curl -L "$checksum_url" -o "checksum.txt"
+    local expected_checksum=$(cat checksum.txt | cut -d ' ' -f 1)
+    local actual_checksum=$(sha256sum "${package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_checksum" != "$actual_checksum" ]; then
+        error "Checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Checksum verified."
 
     case "$ID" in
     "debian" | "ubuntu")
-        run_as_root dpkg -i "bottom.${file_ext}"
+        run_as_root dpkg -i "${package_name}"
         ;;
     esac
 
@@ -326,28 +398,67 @@ install_eza() {
     info "Installing the latest version of eza..."
 
     local machine=$(uname -m | sed 's/amd64/x86_64/;s/arm64/aarch64/')
-    local download_url=""
-    local file_ext=""
+    local file_ext="tar.gz"
+    local bin_package_name="eza_${machine}-unknown-linux-gnu.${file_ext}"
+    local completions_package_name="completions-${latest_version}.${file_ext}"
+    local man_package_name="man-${latest_version}.${file_ext}"
 
-    file_ext="tar.gz"
-    bin_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/eza_${machine}-unknown-linux-gnu.${file_ext}"
-    completions_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/completions-${latest_version}.${file_ext}"
-    man_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/man-${latest_version}.${file_ext}"
+    local bin_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/${bin_package_name}"
+    local completions_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/${completions_package_name}"
+    local man_download_url="https://github.com/eza-community/eza/releases/download/v${latest_version}/${man_package_name}"
 
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
     info "Downloading eza from ${bin_download_url}"
-    curl -L "$bin_download_url" -o "eza.${file_ext}"
-    curl -L "$completions_download_url" -o "completions.${file_ext}"
-    curl -L "$man_download_url" -o "man.${file_ext}"
+    curl -L "$bin_download_url" -o "${bin_package_name}"
+    curl -L "$completions_download_url" -o "${completions_package_name}"
+    curl -L "$man_download_url" -o "${man_package_name}"
+
+    info "Verifying checksums..."
+    local bin_checksum_url="${bin_download_url}.sha256"
+    curl -L "$bin_checksum_url" -o "bin_checksum.txt"
+    local expected_bin_checksum=$(cat bin_checksum.txt)
+    local actual_bin_checksum=$(sha256sum "${bin_package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_bin_checksum" != "$actual_bin_checksum" ]; then
+        error "Binary checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Binary checksum verified."
+
+    local completions_checksum_url="${completions_download_url}.sha256"
+    curl -L "$completions_checksum_url" -o "completions_checksum.txt"
+    local expected_completions_checksum=$(cat completions_checksum.txt)
+    local actual_completions_checksum=$(sha256sum "${completions_package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_completions_checksum" != "$actual_completions_checksum" ]; then
+        error "Completions checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Completions checksum verified."
+
+    local man_checksum_url="${man_download_url}.sha256"
+    curl -L "$man_checksum_url" -o "man_checksum.txt"
+    local expected_man_checksum=$(cat man_checksum.txt)
+    local actual_man_checksum=$(sha256sum "${man_package_name}" | cut -d ' ' -f 1)
+
+    if [ "$expected_man_checksum" != "$actual_man_checksum" ]; then
+        error "Man pages checksum verification failed."
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+    info "Man pages checksum verified."
+
 
     info "Extracting eza..."
 
     mkdir -p /usr/local/bin
-    run_as_root tar -xzf "eza.${file_ext}" --directory=/usr/local/bin
+    run_as_root tar -xzf "${bin_package_name}" --directory=/usr/local/bin
     chmod +x /usr/local/bin/eza
     mkdir completions
-    tar -xzf "completions.${file_ext}" --directory=completions
+    tar -xzf "${completions_package_name}" --directory=completions
     run_as_root mkdir -p /usr/local/share/zsh/site-functions
     run_as_root mkdir -p /usr/local/share/bash-completion/completions
     run_as_root mkdir -p /usr/share/fish/vendor_completions.d
@@ -355,7 +466,7 @@ install_eza() {
     run_as_root mv "$temp_dir/completions/target/completions-${latest_version}/eza" /usr/local/share/bash-completion/completions/eza
     run_as_root mv "$temp_dir/completions/target/completions-${latest_version}/eza.fish" /usr/share/fish/vendor_completions.d/eza.fish
     mkdir man
-    tar -xzf "man.${file_ext}" --directory=man
+    tar -xzf "${man_package_name}" --directory=man
     mkdir -p /usr/local/share/man/man1
     run_as_root mv "$temp_dir/man/target/man-${latest_version}/eza.1" /usr/local/share/man/man1/eza.1
     mkdir -p /usr/local/share/man/man5
