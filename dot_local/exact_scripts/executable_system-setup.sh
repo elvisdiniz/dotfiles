@@ -379,13 +379,13 @@ setup_arch() {
 # Function to install packages on Debian/Ubuntu
 setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
-    add_eza_apt_repository
     run_as_root apt-get update
     local packages="bat curl eza wget git vim fzf fd-find ripgrep neovim fish zsh tmux"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages fastfetch btm zoxide starship"
         else
+            add_eza_apt_repository
             install_zoxide
             install_fastfetch
             install_bottom
