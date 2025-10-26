@@ -17,11 +17,11 @@ blur = true
 
 [general]
 import = [
-  # uncomment the flavour you want below:
-  # "~/.config/alacritty/catppuccin-latte.toml"
-  # "~/.config/alacritty/catppuccin-frappe.toml"
-  # "~/.config/alacritty/catppuccin-macchiato.toml"
+{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
+  "~/.config/alacritty/themes/catppuccin-latte.toml"
+{{- else }}
   "~/.config/alacritty/themes/catppuccin-mocha.toml"
+{{- end }}
 ]
 
 [terminal]

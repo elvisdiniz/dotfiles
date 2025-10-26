@@ -29,8 +29,13 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.menuBarVisibility": "hidden",
   "window.restoreWindows": "none",
+  {{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
+  "workbench.colorTheme": "Catppuccin Latte",
+  "workbench.iconTheme": "catppuccin-latte",
+  {{- else }}
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
+  {{- end }}
   "workbench.startupEditor": "newUntitledFile",
   "remote.autoForwardPortsSource": "hybrid",
   "remote.defaultExtensionsIfInstalledLocally": [

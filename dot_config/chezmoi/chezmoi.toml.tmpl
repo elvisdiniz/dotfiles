@@ -1,9 +1,2 @@
 [diff]
     exclude = ["scripts"]
-[data]
-
-{{- if (lookPath "darkman") }}
-    theme = "{{- output "darkman" "get" | trim -}}"
-{{- else -}}
-    theme = "dark"
-{{- end -}}
