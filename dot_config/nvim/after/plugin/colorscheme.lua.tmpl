@@ -3,7 +3,11 @@
 -- Add any additional options here
 
 require("catppuccin").setup({
-  flavour = "mocha", -- latte, frappe, macchiato, mocha
+  {{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
+  flavour = "latte",
+  {{- else }}
+  flavour = "mocha",
+  {{- end }}
   background = { -- :h background
     light = "latte",
     dark = "mocha",
