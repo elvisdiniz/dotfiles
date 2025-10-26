@@ -122,4 +122,8 @@ Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 call plug#end()
 
+{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
+colorscheme catppuccin_latte
+{{- else }}
 colorscheme catppuccin_mocha
+{{- end }}
