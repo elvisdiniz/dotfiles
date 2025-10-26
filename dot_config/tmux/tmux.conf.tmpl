@@ -39,6 +39,12 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @resurrect-capture-pane-contents 'on'
 set -g @continuum-restore 'off'
 
+{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
+set -g @catppuccin_flavor 'latte'
+{{- else }}
+set -g @catppuccin_flavor 'mocha'
+{{- end }}
+
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.config/tmux/plugins/tpm/tpm'
 
