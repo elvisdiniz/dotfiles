@@ -38,7 +38,6 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set -g @resurrect-capture-pane-contents 'on'
 set -g @continuum-restore 'off'
-
 {{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
 set -g @catppuccin_flavor 'latte'
 {{- else }}
