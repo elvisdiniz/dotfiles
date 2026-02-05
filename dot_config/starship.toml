@@ -2,12 +2,7 @@
 
 # Move the directory to the second line
 format = '$all$shlvl$character'
-
-{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
-palette = "catppuccin_latte"
-{{- else }}
 palette = "catppuccin_mocha"
-{{- end }}
 
 [sudo]
 disabled = false

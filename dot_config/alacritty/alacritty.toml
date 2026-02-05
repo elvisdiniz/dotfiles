@@ -17,11 +17,7 @@ blur = true
 
 [general]
 import = [
-{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
-  "~/.config/alacritty/themes/catppuccin-latte.toml"
-{{- else }}
   "~/.config/alacritty/themes/catppuccin-mocha.toml"
-{{- end }}
 ]
 
 [terminal]
