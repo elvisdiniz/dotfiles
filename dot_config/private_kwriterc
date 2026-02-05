@@ -82,11 +82,7 @@ Fallback Encoding=ISO 8859-15
 [KTextEditor Renderer]
 Animate Bracket Matching=false
 Auto Color Theme Selection=false
-{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
-Color Theme=Catppuccin Latte
-{{- else }}
 Color Theme=Catppuccin Mocha
-{{- end }}
 Font=Hack,10,-1,7,50,0,0,0,0,0
 Line Height Multiplier=1
 Show Indentation Lines=false
@@ -165,8 +161,8 @@ Replace History=battlenet
 1920x1080 screen: Width=1210
 2 screens: Height=644
 2 screens: Width=1224
-2560x1440 screen: Height=822
-2560x1440 screen: Width=1248
+2560x1440 screen: Height=684
+2560x1440 screen: Width=1210
 
 [Printing][HeaderFooter]
 FooterBackground=211,211,211
@@ -200,8 +196,4 @@ Legend=false
 LineNumbers=false
 
 [UiSettings]
-{{- if (and (lookPath "darkman") (eq (output "darkman" "get" | trim) "light")) }}
-ColorScheme=CatppuccinLatteLavender
-{{- else }}
 ColorScheme=CatppuccinMochaLavender
-{{- end }}
