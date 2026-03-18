@@ -53,9 +53,6 @@
     },
     "editor.defaultFormatter": "ms-azuretools.vscode-containers"
   },
-  "dev.containers.dockerPath": "podman",
-  "dev.containers.dockerComposePath": "podman-compose",
-  "dev.containers.dockerSocketPath": "/run/user/1000/podman/podman.sock",
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -69,6 +66,5 @@
       "installOhMyZsh": false,
       "installOhMyZshConfig": false
     }
-  },
-  "containers.containerClient": "com.microsoft.visualstudio.containers.podman"
+  }
 }
