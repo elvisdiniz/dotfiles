@@ -161,8 +161,8 @@ Replace History=battlenet
 1920x1080 screen: Width=1210
 2 screens: Height=644
 2 screens: Width=1224
-2560x1440 screen: Height=684
-2560x1440 screen: Width=1210
+2560x1440 screen: Height=992
+2560x1440 screen: Width=1203
 
 [Printing][HeaderFooter]
 FooterBackground=211,211,211
