@@ -12,10 +12,10 @@ chmod +x "$SETUP_SCRIPT"
 declare -A TEST_IMAGES
 TEST_IMAGES=(
     ["archlinux/archlinux"]="arch::"
-    # ["debian:bookworm-slim"]="debian:12:" # Debian 12 Bookworm
+    ["debian:bookworm-slim"]="debian:12:" # Debian 12 Bookworm
     ["debian:trixie-slim"]="debian:13:" # Debian 13 Trixie
     ["ubuntu:questing"]="ubuntu:25.10:" # Ubuntu 25.10 Questing
-    # ["ubuntu:noble"]="ubuntu:24.04:" # Ubuntu 24.04 LTS Noble Numbat
+    ["ubuntu:noble"]="ubuntu:24.04:" # Ubuntu 24.04 LTS Noble Numbat
     ["alpine:latest"]="alpine:3.19:" # Alpine Linux 3.19
     ["fedora:latest"]="fedora:43:" # Fedora 43
     ["opensuse/tumbleweed"]="opensuse-tumbleweed::"
