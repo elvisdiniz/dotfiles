@@ -32,7 +32,7 @@ add_eza_apt_repository() {
         info "gpg is not installed. Installing it now..."
         case "$ID" in
         "debian" | "ubuntu")
-            run_as_root apt-get install -y gpg
+            run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y gpg
             ;;
         *)
             error "Unsupported Linux distribution for gpg installation: $ID"
@@ -404,7 +404,7 @@ setup_debian_ubuntu() {
             curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
         fi
     fi
-    run_as_root apt-get install -y $packages
+    run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y $packages
     install_chezmoi
 }
 
