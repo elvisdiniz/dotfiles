@@ -380,7 +380,7 @@ setup_arch() {
 setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="bat curl eza wget git vim fzf fd-find ripgrep neovim fish zsh tmux"
+    local packages="bat curl eza wget git vim fzf fd-find ripgrep neovim fish zsh tmux sudo"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages fastfetch btm zoxide starship"
@@ -407,13 +407,14 @@ setup_debian_ubuntu() {
 setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+    run_as_root apk add bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Fedora
 setup_fedora() {
     info "Installing packages for Fedora..."
-    local packages="bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux procps-ng"
+    run_as_root dnf copr enable -y atim/starship
+    local packages="starship bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux procps-ng"
     if [ "$VERSION_ID" -lt 42 ]; then
         packages="$packages eza"
     else
