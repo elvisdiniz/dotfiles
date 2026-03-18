@@ -16,10 +16,12 @@ TEST_IMAGES=(
     ["debian:trixie-slim"]="debian:13:" # Debian 13 Trixie
     ["ubuntu:questing"]="ubuntu:25.10:" # Ubuntu 25.10 Questing
     ["ubuntu:noble"]="ubuntu:24.04:" # Ubuntu 24.04 LTS Noble Numbat
-    ["alpine:latest"]="alpine:3.19:" # Alpine Linux 3.19
-    ["fedora:latest"]="fedora:43:" # Fedora 43
+    ["alpine:3.19"]="alpine:3.19:" # Alpine Linux 3.19
+    ["alpine:3.23"]="alpine:3.23:" # Alpine Linux 3.23
+    ["fedora:43"]="fedora:43:" # Fedora 43
+    ["fedora:42"]="fedora:42:" # Fedora 42
     ["opensuse/tumbleweed"]="opensuse-tumbleweed::"
-    ["opensuse/leap"]="opensuse-leap:15.5:" # openSUSE Leap 15.5
+    ["opensuse/leap:15"]="opensuse-leap:15:" # openSUSE Leap 15
 )
 
 # Commands that should be installed by the setup script
