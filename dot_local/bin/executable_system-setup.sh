@@ -389,6 +389,9 @@ setup_debian_ubuntu() {
             install_zoxide
             install_fastfetch
             install_bottom
+
+            # Install starship
+            curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
@@ -397,6 +400,8 @@ setup_debian_ubuntu() {
             packages="$packages starship fastfetch"
         else
             install_fastfetch
+            # Install starship
+            curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
         fi
     fi
     run_as_root apt-get install -y $packages
@@ -427,7 +432,7 @@ setup_fedora() {
 # Function to install packages on openSUSE
 setup_opensuse() {
     info "Installing packages for openSUSE..."
-    local packages="chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
+    local packages="bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
     if [ "$ID" = "opensuse-tumbleweed" ]; then
         packages="$packages zoxide"
     fi
