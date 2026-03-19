@@ -29,6 +29,7 @@ REQUIRED_COMMANDS=(
     "bash"
     "chezmoi"
     "starship"
+    "gcc"
     "eza"
     "bat"
     "curl"
