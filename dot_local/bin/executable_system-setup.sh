@@ -368,6 +368,63 @@ install_eza() {
     rm -rf "$temp_dir"
 }
 
+# Function to install the latest version of Neovim from GitHub releases
+install_neovim() {
+    install_package jq
+    install_package rsync
+
+    info "Checking for the latest version of Neovim..."
+    local latest_tag=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" | jq -r '.tag_name')
+    if [ -z "$latest_tag" ] || [ "$latest_tag" = "null" ]; then
+        error "Could not fetch latest Neovim version tag from GitHub."
+        return 1
+    fi
+    local latest_version=$(echo "$latest_tag" | sed 's/v//')
+
+    if command_exists nvim; then
+        # NVIM v0.9.5 -> 0.9.5
+        local current_version=$(nvim --version | head -n 1 | cut -d ' ' -f 2 | sed 's/v//')
+        if [ "$current_version" = "$latest_version" ]; then
+            info "Neovim is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of Neovim is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of Neovim..."
+
+    local machine=$(uname -m | sed 's/amd64/x86_64/;s/aarch64/arm64/')
+    local temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+
+    case "$ID" in
+    "debian" | "ubuntu")
+        if [ "$machine" = "x86_64" ] || [ "$machine" = "arm64" ]; then
+            local download_url="https://github.com/neovim/neovim/releases/download/${latest_tag}/nvim-linux-${machine}.tar.gz"
+            info "Downloading Neovim from ${download_url}"
+            curl -L "$download_url" -o "neovim.tar.gz"
+            info "Extracting Neovim..."
+            tar -xzf "neovim.tar.gz"
+            info "Uninstalling any existing Neovim installation..."
+            run_as_root apt remove -y neovim || true
+            info "Installing Neovim to /usr/local..."
+            # Using rsync to merge directories
+            run_as_root rsync -a --chown=root:root nvim-linux-${machine}/ /usr/local/
+            info "Neovim installed successfully."
+        else
+            error "Unsupported machine architecture for Neovim installation: $machine"
+        fi
+        ;;
+    *)
+        error "Unsupported Linux distribution for Neovim installation: $ID"
+        ;;
+    esac
+
+    cd -
+    rm -rf "$temp_dir"
+}
+
 # Function to install packages on Arch Linux
 setup_arch() {
     info "Installing packages for Arch Linux..."
@@ -380,7 +437,7 @@ setup_arch() {
 setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="bat curl eza wget git vim fzf fd-find ripgrep neovim fish zsh tmux sudo"
+    local packages="bat curl eza wget git vim fzf fd-find ripgrep fish zsh tmux sudo"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages fastfetch btm zoxide starship"
@@ -406,6 +463,7 @@ setup_debian_ubuntu() {
     fi
     run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y $packages
     install_chezmoi
+    install_neovim
 }
 
 # Function to install packages on Alpine Linux
