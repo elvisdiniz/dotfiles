@@ -430,14 +430,14 @@ setup_arch() {
     info "Installing packages for Arch Linux..."
     run_as_root pacman -Syu --noconfirm
     run_as_root pacman -S --noconfirm --needed \
-        chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+        gcc chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Debian/Ubuntu
 setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="bat curl eza wget git vim fzf fd-find ripgrep fish zsh tmux sudo"
+    local packages="gcc bat curl eza wget git vim fzf fd-find ripgrep fish zsh tmux sudo"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages fastfetch btm zoxide starship"
@@ -470,14 +470,14 @@ setup_debian_ubuntu() {
 setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+    run_as_root apk add gcc bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Fedora
 setup_fedora() {
     info "Installing packages for Fedora..."
     run_as_root dnf copr enable -y atim/starship
-    local packages="starship bat curl wget git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux procps-ng"
+    local packages="starship bat curl wget gcc git vim fastfetch fzf fd-find ripgrep neovim fish zoxide zsh tmux procps-ng"
     if [ "$VERSION_ID" -lt 42 ]; then
         packages="$packages eza"
     else
@@ -490,7 +490,7 @@ setup_fedora() {
 # Function to install packages on openSUSE
 setup_opensuse() {
     info "Installing packages for openSUSE..."
-    local packages="bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
+    local packages="bash chezmoi starship gcc eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zsh tmux sudo"
     if [ "$ID" = "opensuse-tumbleweed" ]; then
         packages="$packages zoxide"
     fi
@@ -504,7 +504,7 @@ setup_opensuse() {
 setup_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
-    run_as_root pkg install -y chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+    run_as_root pkg install -y gcc chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on macOS
@@ -716,3 +716,4 @@ main() {
 }
 
 main "$@"
+
