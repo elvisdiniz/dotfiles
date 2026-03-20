@@ -504,7 +504,7 @@ setup_opensuse() {
 setup_freebsd() {
     info "Installing packages for FreeBSD..."
     run_as_root pkg update
-    run_as_root pkg install -y gcc chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+    run_as_root pkg install -y gcc tree-sitter-cli chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on macOS
