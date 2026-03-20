@@ -470,7 +470,7 @@ setup_debian_ubuntu() {
 setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add gcc bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
+    run_as_root apk add build-base tree-sitter-cli bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Fedora
