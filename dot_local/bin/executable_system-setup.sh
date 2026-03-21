@@ -487,6 +487,26 @@ install_fzf() {
     rm -rf "$temp_dir"
 }
 
+install_starship() {
+    install_package curl
+
+    # Check if starship is already installed and up to date
+    info "Checking for the latest version of starship..."
+    local latest_version=$(curl -s "https://api.github.com/repos/starship/starship/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+    if command_exists starship; then
+        local current_version=$(starship --version | cut -d ' ' -f 2 | head -n 1)
+        if [ "$current_version" = "$latest_version" ]; then
+            info "starship is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of starship is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    info "Installing the latest version of starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
+}
+
 # Function to install packages on Arch Linux
 setup_arch() {
     info "Installing packages for Arch Linux..."
@@ -508,9 +528,7 @@ setup_debian_ubuntu() {
             install_zoxide
             install_fastfetch
             install_bottom
-
-            # Install starship
-            curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
+            install_starship
         fi
     fi
     if [ "$ID" = "ubuntu" ]; then
@@ -519,8 +537,7 @@ setup_debian_ubuntu() {
             packages="$packages starship fastfetch"
         else
             install_fastfetch
-            # Install starship
-            curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir /usr/local/bin
+            install_starship
         fi
     fi
     run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y $packages
