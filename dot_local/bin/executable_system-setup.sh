@@ -412,6 +412,81 @@ install_neovim() {
     rm -rf "$temp_dir"
 }
 
+# Function to install the latest version of fzf from GitHub releases
+install_fzf() {
+    install_package jq
+    install_package tar
+    install_package gzip
+
+    info "Checking for the latest version of fzf..."
+    local latest_version=$(curl -s "https://api.github.com/repos/junegunn/fzf/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+
+    if command_exists fzf; then
+        # fzf 0.48.1 (e5f84ea) -> 0.48.1
+        local current_version=$(fzf --version | cut -d ' ' -f 1)
+        if [ "$current_version" = "$latest_version" ]; then
+            info "fzf is already up to date (version $current_version)."
+            return
+        else
+            info "A new version of fzf is available: $latest_version (you have $current_version)."
+        fi
+    fi
+
+    # If Debian or Ubuntu, remove the existing fzf package to avoid conflicts with the new installation
+    if [ "$ID" = "debian" ] || [ "$ID" = "ubuntu" ]; then
+        if dpkg -l | grep -q fzf; then
+            info "Removing existing fzf package to avoid conflicts..."
+            run_as_root apt-get remove -y fzf
+        fi
+    fi
+
+    info "Installing the latest version of fzf..."
+
+    local machine
+    machine=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+    local bin_download_url=""
+    local file_ext="tar.gz"
+
+    bin_download_url="https://github.com/junegunn/fzf/releases/download/v${latest_version}/fzf-${latest_version}-linux_${machine}.${file_ext}"
+
+    src_download_url="https://github.com/junegunn/fzf/archive/v${latest_version}.tar.gz"
+
+    local temp_dir
+    temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+
+    info "Downloading fzf from ${bin_download_url}"
+    curl -L "$bin_download_url" -o "fzf.${file_ext}"
+
+    info "Downloading fzf source from ${src_download_url}"
+    curl -L "$src_download_url" -o "fzf-src.${file_ext}"
+
+    info "Extracting fzf..."
+    tar -xzf "fzf.${file_ext}"
+
+    info "Extracting fzf source..."
+    tar -xzf "fzf-src.${file_ext}"
+
+    info "Installing fzf binary..."
+    run_as_root install -m 0755 fzf /usr/local/bin/fzf
+
+    info "Installing fzf-tmux script..."
+    run_as_root install -m 0755 fzf-${latest_version}/bin/fzf-tmux /usr/local/bin/fzf-tmux
+
+    info "Installing fzf man page..."
+    run_as_root install -m 0644 -D fzf-${latest_version}/man/man1/fzf.1 /usr/local/share/man/man1/fzf.1
+
+    info "Installing fzf shell completions..."
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/completion.bash /usr/local/share/bash-completion/completions/fzf
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/completion.zsh /usr/local/share/zsh/site-functions/_fzf
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/completion.fish /usr/share/fish/vendor_completions.d/fzf.fish
+
+    info "fzf installed successfully."
+
+    cd -
+    rm -rf "$temp_dir"
+}
+
 # Function to install packages on Arch Linux
 setup_arch() {
     info "Installing packages for Arch Linux..."
@@ -424,7 +499,7 @@ setup_arch() {
 setup_debian_ubuntu() {
     info "Installing packages for Debian/Ubuntu..."
     run_as_root apt-get update
-    local packages="gcc bat curl eza wget git vim fzf fd-find ripgrep fish zsh tmux sudo"
+    local packages="gcc bat curl eza wget git vim fd-find ripgrep fish zsh tmux sudo"
     if [ "$ID" = "debian" ]; then
         if [ "$VERSION_ID" -ge 13 ]; then
             packages="$packages fastfetch btm zoxide starship"
@@ -451,6 +526,7 @@ setup_debian_ubuntu() {
     run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y $packages
     install_chezmoi
     install_neovim
+    install_fzf
 }
 
 # Function to install packages on Alpine Linux
