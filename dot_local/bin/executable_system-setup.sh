@@ -484,36 +484,13 @@ install_fzf() {
     run_as_root install -m 0644 -D fzf-${latest_version}/shell/completion.zsh /usr/local/share/zsh/site-functions/_fzf
     run_as_root install -m 0644 -D fzf-${latest_version}/shell/completion.fish /usr/share/fish/vendor_completions.d/fzf.fish
 
+    info "Installing fzf key-bindings..."
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/key-bindings.bash /usr/local/share/bash-completion/completions/fzf-key-bindings
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/key-bindings.zsh /usr/local/share/zsh/site-functions/_fzf-key-bindings
+    run_as_root install -m 0644 -D fzf-${latest_version}/shell/key-bindings.fish /usr/share/fish/vendor_completions.d/fzf-key-bindings.fish
+
     info "fzf installed successfully."
 
-    cd -
-    rm -rf "$temp_dir"
-}
-
-# install fzf-tmux script for tmux integration
-install_fzf_tmux() {
-    if ! command_exists fzf; then
-        error "fzf is not installed. Please install it first."
-        exit 1
-    fi
-
-    # Check if fzf-tmux is already installed
-    if command_exists fzf-tmux; then
-        info "fzf-tmux is already installed."
-        return
-    fi
-
-    install_package jq
-    install_package ncurses
-
-    local latest_version=$(curl -s "https://api.github.com/repos/junegunn/fzf/releases/latest" | jq -r '.tag_name' | sed 's/v//')
-    local src_download_url="https://github.com/junegunn/fzf/archive/v${latest_version}.tar.gz"
-    local temp_dir=$(mktemp -d)
-    cd "$temp_dir"
-    info "Downloading fzf source from ${src_download_url}"
-    curl -L "$src_download_url" -o "fzf-src.tar.gz"
-    tar -xzf "fzf-src.tar.gz"
-    run_as_root install -m 0755 fzf-${latest_version}/bin/fzf-tmux /usr/local/bin/fzf-tmux
     cd -
     rm -rf "$temp_dir"
 }
@@ -581,8 +558,7 @@ setup_debian_ubuntu() {
 setup_alpine() {
     info "Installing packages for Alpine Linux..."
     run_as_root apk update
-    run_as_root apk add build-base tree-sitter-cli bash chezmoi starship eza bat curl wget git vim fastfetch fzf fd ripgrep neovim bottom fish zoxide zsh tmux sudo
-    install_fzf_tmux
+    run_as_root apk add build-base tree-sitter-cli bash chezmoi starship eza bat curl wget git vim fastfetch fzf fzf-tmux fzf-zsh-plugin fzf-fish-plugin fzf-bash-plugin fd ripgrep neovim bottom fish zoxide zsh tmux sudo
 }
 
 # Function to install packages on Fedora
