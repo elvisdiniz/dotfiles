@@ -358,13 +358,44 @@ install_eza() {
     rm -rf "$temp_dir"
 }
 
+uninstall_neovim() {
+    if command_exists nvim; then
+        info "Uninstalling existing Neovim installation..."
+        case "$ID" in
+        "debian" | "ubuntu")
+            if [ "command -v nvim" = "/usr/local/bin/nvim" ]; then
+                run_as_root rm -rf /usr/local/bin/nvim /usr/local/share/nvim /usr/local/lib/nvim /usr/local/share/applications/nvim.desktop /usr/local/share/icons/hicolor/128x128/apps/nvim.png /usr/local/share/man/man1/nvim.1 || true
+            else
+                run_as_root apt remove -y neovim || true
+            fi
+            ;;
+        *)
+            error "Unsupported Linux distribution for Neovim uninstallation: $ID"
+            exit 1
+            ;;
+        esac
+    fi
+}
+
 # Function to install the latest version of Neovim from GitHub releases
 install_neovim() {
     install_package jq
     install_package rsync
 
+    local current_libc_version=$(getconf GNU_LIBC_VERSION | awk '{print $2}')
+    local minimal_libc_version="2.39"
+
+    local lowest=$(printf '%s\n%s' "$current_libc_version" "$minimal_libc_version" | sort -V | head -n1)
+
+    local repo=""
+    if [ "$lowest" = "$current_libc_version" ] && [ "$current_libc_version" != "$minimal_libc_version" ]; then
+        repo="neovim/neovim-releases"
+    else
+        repo="neovim/neovim"
+    fi
+
     info "Checking for the latest version of Neovim..."
-    local latest_tag=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" | jq -r '.tag_name')
+    local latest_tag=$(curl -s "https://api.github.com/repos/$repo/releases/latest" | jq -r '.tag_name')
     if [ -z "$latest_tag" ] || [ "$latest_tag" = "null" ]; then
         error "Could not fetch latest Neovim version tag from GitHub."
         return 1
@@ -385,22 +416,33 @@ install_neovim() {
     info "Installing the latest version of Neovim..."
 
     local machine=$(uname -m | sed 's/amd64/x86_64/;s/aarch64/arm64/')
+    local file_ext=""
+    if [ "$repo" = "neovim/neovim" ]; then
+        file_ext="tar.gz"
+    else
+        file_ext="deb"
+    fi
     local temp_dir=$(mktemp -d)
     cd "$temp_dir"
 
     case "$ID" in
     "debian" | "ubuntu")
         if [ "$machine" = "x86_64" ] || [ "$machine" = "arm64" ]; then
-            local download_url="https://github.com/neovim/neovim/releases/download/${latest_tag}/nvim-linux-${machine}.tar.gz"
+            local download_url="https://github.com/$repo/releases/download/${latest_tag}/nvim-linux-${machine}.${file_ext}"
             info "Downloading Neovim from ${download_url}"
-            curl -L "$download_url" -o "neovim.tar.gz"
-            info "Extracting Neovim..."
-            tar -xzf "neovim.tar.gz"
-            info "Uninstalling any existing Neovim installation..."
-            run_as_root apt remove -y neovim || true
-            info "Installing Neovim to /usr/local..."
-            # Using rsync to merge directories
-            run_as_root rsync -a --chown=root:root nvim-linux-${machine}/ /usr/local/
+            curl -L "$download_url" -o "neovim.${file_ext}"
+            uninstall_neovim
+            if [ "$repo" = "neovim/neovim" ]; then
+                info "Extracting Neovim..."
+                tar -xzf "neovim.${file_ext}"
+                info "Installing Neovim to /usr/local..."
+                # Using rsync to merge directories
+                run_as_root rsync -a --chown=root:root nvim-linux-${machine}/ /usr/local/
+            fi
+            if [ "$repo" = "neovim/neovim-releases" ]; then
+                info "Installing Neovim"
+                run_as_root dpkg -i "neovim.${file_ext}"
+            fi
             info "Neovim installed successfully."
         else
             error "Unsupported machine architecture for Neovim installation: $machine"
