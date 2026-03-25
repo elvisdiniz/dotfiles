@@ -1,6 +1,8 @@
 if status is-interactive
     set -U fish_greeting
 
+    set -g fish_key_bindings fish_vi_key_bindings
+
     $SCRIPTS_HOME/install_starship.sh
     if test -x $BIN_HOME/starship
         eval "$(starship completions fish)"
