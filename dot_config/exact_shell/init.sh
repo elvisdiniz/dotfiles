@@ -5,4 +5,3 @@ export SHELL_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 for file in ${SHELL_CONFIG_HOME}/init.sh.d/*.sh; do
     source "$file"
 done
-[ -f "${SHELL_CONFIG_HOME}/aliases.sh" ] && source "${SHELL_CONFIG_HOME}/aliases.sh"
