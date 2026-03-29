@@ -119,6 +119,8 @@ zinit load atuinsh/atuin
 
 zinit add-fpath "$ZSH_CACHE_DIR/completions"
 
+source $HOME/.config/zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+
 # compinit
 autoload -U compinit
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/zcompcache"
