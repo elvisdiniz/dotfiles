@@ -17,5 +17,10 @@ if status is-interactive
         fzf --fish | source
     end
 
+    if test -x "$(command -v atuin)"
+        and atuin init fish 2>/dev/null >/dev/null
+        atuin init fish | source
+    end
+
     starship init fish | source
 end
